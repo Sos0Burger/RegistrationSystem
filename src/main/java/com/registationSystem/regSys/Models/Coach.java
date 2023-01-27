@@ -1,11 +1,11 @@
-package com.registationSystem.regSys.Data;
+package com.registationSystem.regSys.Models;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Coaches")
 
-public final class Coach {
+public class Coach {
 
     @Id
     @Column(name = "id")
@@ -13,9 +13,9 @@ public final class Coach {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clientsIdSeq")
     private final int id;
     @Column(name = "firstName")
-    private final String name;
+    private String name;
     @Column(name = "surname")
-    private final String surname;
+    private String surname;
 
     public Coach(int id, String name, String surname) {
         this.id = id;
@@ -35,4 +35,11 @@ public final class Coach {
         return surname;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
 }

@@ -1,4 +1,4 @@
-package com.registationSystem.regSys.Data;
+package com.registationSystem.regSys.Models;
 
 import jakarta.persistence.*;
 @Entity
@@ -10,11 +10,11 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clientsIdSeq")
     private final int id;
     @Column(name = "size")
-    private final int size;
+    private int size;
     @Column(name = "minAge")
-    private final int minAge;
+    private int minAge;
     @Column(name = "maxAge")
-    private final int maxAge;
+    private int maxAge;
 
     public Group(int id, int size, int minAge, int maxAge){
         this.id = id;
@@ -37,5 +37,17 @@ public class Group {
 
     public int getSize() {
         return size;
+    }
+
+    public void setMaxAge(int maxAge) {
+        this.maxAge = maxAge;
+    }
+
+    public void setMinAge(int minAge) {
+        this.minAge = minAge;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 }

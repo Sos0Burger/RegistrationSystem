@@ -1,4 +1,4 @@
-package com.registationSystem.regSys.Data;
+package com.registationSystem.regSys.Models;
 
 import jakarta.persistence.*;
 
@@ -7,18 +7,18 @@ import jakarta.persistence.*;
 public class Student {
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "clientsIdSeq", sequenceName = "clients_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clientsIdSeq")
-    private final int id;
-    @Column(name = "firstName")
+    @SequenceGenerator(name = "StudentsIdSeq", sequenceName = "Students_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "StudentsIdSeq")
+    private int id;
+    @Column(name = "firstname")
     private final String name;
     @Column(name = "surname")
     private final String surname;
     @Column(name = "age")
     private final int age;
-    @Column(name = "absentCounter")
-    private final int absentCounter;
-    @Column(name = "isStudying")
+    @Column(name = "absencecounter")
+    private final int absenceCounter;
+    @Column(name = "isstudying")
     private final boolean isStudying;
 
     public Student(int id, String name, String surname, int age, int absentCounter, boolean isStudying){
@@ -26,7 +26,7 @@ public class Student {
         this.name = name;
         this.surname = surname;
         this.age = age;
-        this.absentCounter = absentCounter;
+        this.absenceCounter = absentCounter;
         this.isStudying = isStudying;
     }
 
@@ -47,10 +47,14 @@ public class Student {
     }
 
     public int getAbsentCounter() {
-        return absentCounter;
+        return absenceCounter;
     }
 
     public boolean isStudying() {
         return isStudying;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

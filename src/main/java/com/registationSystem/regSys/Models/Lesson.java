@@ -1,4 +1,4 @@
-package com.registationSystem.regSys.Data;
+package com.registationSystem.regSys.Models;
 
 import jakarta.persistence.*;
 
@@ -14,15 +14,15 @@ public final class Lesson {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clientsIdSeq")
     private final int id;
     @Column(name = "time")
-    private final Time time;
+    private Time time;
     @Column(name = "date")
-    private final Date date;
+    private Date date;
     @Column(name = "coachId")
-    private final int coachId;
+    private int coachId;
     @Column(name = "absentList")
-    private final int[] absentList;
+    private int[] absentList;
     @Column(name = "isDone")
-    private final boolean isDone;
+    private boolean isDone;
 
     public Lesson(int id, Time time, Date date, int coachID, int[] absentList, boolean isDone) {
         this.id = id;
@@ -57,5 +57,23 @@ public final class Lesson {
         return isDone;
     }
 
+    public void setAbsentList(int[] absentList) {
+        this.absentList = absentList;
+    }
 
+    public void setCoachId(int coachId) {
+        this.coachId = coachId;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
+    }
 }
