@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class StudentController {
@@ -22,10 +25,15 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @PostMapping(value = "/students")
+    @PostMapping("/students")
     public ResponseEntity<?> create(@RequestBody Student student) {
         studentService.create(student);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/students")
+    public List<Student> readAll(){
+        return studentService.readAll();
     }
 
 }

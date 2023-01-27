@@ -11,15 +11,17 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "StudentsIdSeq")
     private int id;
     @Column(name = "firstname")
-    private final String name;
+    private String name;
     @Column(name = "surname")
-    private final String surname;
+    private String surname;
     @Column(name = "age")
-    private final int age;
+    private int age;
     @Column(name = "absencecounter")
-    private final int absenceCounter;
+    private int absenceCounter;
     @Column(name = "isstudying")
-    private final boolean isStudying;
+    private boolean isStudying;
+
+    public Student(){};
 
     public Student(int id, String name, String surname, int age, int absentCounter, boolean isStudying){
         this.id = id;
@@ -56,5 +58,25 @@ public class Student {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setAbsenceCounter(int absenceCounter) {
+        this.absenceCounter = absenceCounter;
+    }
+
+    public void setStudying(boolean studying) {
+        isStudying = studying;
     }
 }
