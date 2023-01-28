@@ -1,6 +1,8 @@
 package com.registationSystem.regSys.Controllers;
 
+import com.registationSystem.regSys.Models.Group;
 import com.registationSystem.regSys.Models.Student;
+import com.registationSystem.regSys.Services.GroupService;
 import com.registationSystem.regSys.Services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,13 +15,15 @@ import java.util.List;
 @RestController
 public class StudentController {
     private final StudentService studentService;
+    private final GroupService groupService;
 
     @Autowired
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, GroupService groupService) {
         this.studentService = studentService;
+        this.groupService = groupService;
     }
 
     @PostMapping("/students")
@@ -38,11 +42,29 @@ public class StudentController {
         studentService.update(student, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PostMapping("/students/{id}")
+    @GetMapping("/students/{id}")
     public ResponseEntity<Student> findById(@PathVariable(name = "id")int id){
         final Student student = studentService.read(id);
         return student!=null?
                 new ResponseEntity<>(student, HttpStatus.OK):
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/students/{id}")
+    public ResponseEntity<?> delete(@PathVariable(name = "id")int id){
+        final Student student = studentService.read(id);
+        if(student!=null){
+            //удаляем студента из таблицы
+            studentService.delete(student.getId());
+            //Уменьшаем количество человек в группе, если он состоял в ней
+            if(student.isStudying()){
+                final Group group = groupService.read(student.getGroupId());
+                group.setStudentCounter(group.getStudentCounter()-1);
+                groupService.update(group, student.getGroupId());
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 }

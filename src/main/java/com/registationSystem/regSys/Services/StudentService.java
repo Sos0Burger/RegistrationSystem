@@ -38,4 +38,7 @@ public class StudentService {
         }
         return false;
     }
+    public List<Student> findByGroupId(int id){
+        return studentsRepository.findByGroupId(id);
+    }
 }

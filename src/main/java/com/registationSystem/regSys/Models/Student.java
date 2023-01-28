@@ -25,12 +25,12 @@ public class Student {
 
     public Student(){};
 
-    public Student(int id, String name, String surname, int age, int absentCounter, boolean isStudying, int groupId){
+    public Student(int id, String name, String surname, int age, int absenceCounter, boolean isStudying, int groupId){
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.age = age;
-        this.absenceCounter = absentCounter;
+        this.absenceCounter = absenceCounter;
         this.isStudying = isStudying;
         this.groupId = groupId;
     }
@@ -51,9 +51,6 @@ public class Student {
         return id;
     }
 
-    public int getAbsentCounter() {
-        return absenceCounter;
-    }
 
     public boolean isStudying() {
         return isStudying;

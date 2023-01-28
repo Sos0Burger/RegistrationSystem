@@ -67,4 +67,24 @@ public class GroupsController {
 
         }
     }
+    @DeleteMapping("/groups/{id}")
+    public ResponseEntity<?> delete(@PathVariable(name = "id")int id){
+        final Group group = groupService.read(id);
+        if (group!=null){
+            groupService.delete(group.getId());
+
+            //Изменяем значения атрибутов студентов,которые находились в группе
+            if(group.getStudentCounter()!=0){
+                List<Student> groupStudents = studentService.findByGroupId(group.getId());
+                for (Student student: groupStudents
+                     ) {
+                    student.setStudying(false);
+                    student.setGroupId(-1);
+                    studentService.update(student, student.getId());
+                }
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
