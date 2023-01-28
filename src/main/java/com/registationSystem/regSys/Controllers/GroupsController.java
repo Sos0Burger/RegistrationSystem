@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class GroupsController {
         final Student student = studentService.read(studentId);
         if(student.getAge()> group.getMaxAge()|| student.getAge()< group.getMinAge()){
             //вот это поменять можно на ошибку какую-нибудь
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Age is not acceptable");
         }
         else {
             group.setStudentCounter(group.getStudentCounter() + 1);
@@ -63,6 +64,7 @@ public class GroupsController {
             student.setStudying(true);
             studentService.update(student, studentId);
             return new ResponseEntity<>(HttpStatus.OK);
+
         }
     }
 }
