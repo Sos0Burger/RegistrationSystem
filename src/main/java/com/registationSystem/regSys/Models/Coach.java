@@ -9,14 +9,15 @@ public class Coach {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "clientsIdSeq", sequenceName = "clients_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clientsIdSeq")
-    private final int id;
+    @SequenceGenerator(name = "Coaches", sequenceName = "Coaches_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CoachesIdSeq")
+    private int id;
     @Column(name = "firstName")
     private String name;
     @Column(name = "surname")
     private String surname;
 
+    public Coach(){};
     public Coach(int id, String name, String surname) {
         this.id = id;
         this.name = name;
@@ -41,5 +42,9 @@ public class Coach {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
