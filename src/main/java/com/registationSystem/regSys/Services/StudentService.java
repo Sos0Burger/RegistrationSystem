@@ -21,17 +21,14 @@ public class StudentService {
     }
 
     public Student read(int id) {
-        return studentsRepository.getOne(id);
+        return studentsRepository.findById(id).get();
     }
 
-    public boolean update(Student student, int id) {
+    public void update(Student student, int id) {
         if (studentsRepository.existsById(id)) {
             student.setId(id);
             studentsRepository.save(student);
-            return true;
         }
-
-        return false;
     }
 
     public boolean delete(int id) {

@@ -16,6 +16,8 @@ public class Student {
     private String surname;
     @Column(name = "age")
     private int age;
+    @Column(name = "groupid")
+    int groupId;
     @Column(name = "absencecounter")
     private int absenceCounter;
     @Column(name = "isstudying")
@@ -23,13 +25,14 @@ public class Student {
 
     public Student(){};
 
-    public Student(int id, String name, String surname, int age, int absentCounter, boolean isStudying){
+    public Student(int id, String name, String surname, int age, int absentCounter, boolean isStudying, int groupId){
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.absenceCounter = absentCounter;
         this.isStudying = isStudying;
+        this.groupId = groupId;
     }
 
     public int getAge() {
@@ -78,5 +81,17 @@ public class Student {
 
     public void setStudying(boolean studying) {
         isStudying = studying;
+    }
+
+    public int getAbsenceCounter() {
+        return absenceCounter;
+    }
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 }

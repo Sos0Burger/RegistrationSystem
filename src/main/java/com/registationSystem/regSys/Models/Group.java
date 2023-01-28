@@ -1,26 +1,32 @@
 package com.registationSystem.regSys.Models;
 
 import jakarta.persistence.*;
+
 @Entity
 @Table(name = "Groups")
 public class Group {
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "clientsIdSeq", sequenceName = "clients_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clientsIdSeq")
-    private final int id;
+    @SequenceGenerator(name = "GroupsIdSeq", sequenceName = "Groups_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GroupsIdSeq")
+    private int id;
     @Column(name = "size")
     private int size;
-    @Column(name = "minAge")
+    @Column(name = "minage")
     private int minAge;
-    @Column(name = "maxAge")
+    @Column(name = "maxage")
     private int maxAge;
+    @Column(name = "studentcounter")
+    private int studentCounter;
 
-    public Group(int id, int size, int minAge, int maxAge){
+    public Group(){};
+
+    public Group(int id, int size, int minAge, int maxAge, int studentCounter){
         this.id = id;
         this.size = size;
         this.minAge = minAge;
         this.maxAge = maxAge;
+        this.studentCounter = studentCounter;
     }
 
     public int getId() {
@@ -49,5 +55,17 @@ public class Group {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setStudentCounter(int studentCounter) {
+        this.studentCounter = studentCounter;
+    }
+
+    public int getStudentCounter() {
+        return studentCounter;
     }
 }

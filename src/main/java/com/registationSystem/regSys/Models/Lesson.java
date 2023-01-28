@@ -12,7 +12,7 @@ public final class Lesson {
     @Column(name = "id")
     @SequenceGenerator(name = "clientsIdSeq", sequenceName = "clients_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clientsIdSeq")
-    private final int id;
+    private int id;
     @Column(name = "time")
     private Time time;
     @Column(name = "date")

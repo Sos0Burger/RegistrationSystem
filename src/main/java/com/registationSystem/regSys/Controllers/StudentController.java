@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,4 +33,16 @@ public class StudentController {
         return studentService.readAll();
     }
 
+    @PutMapping("/students")
+    public ResponseEntity<?> update(@RequestBody Student student, int id){
+        studentService.update(student, id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PostMapping("/students/{id}")
+    public ResponseEntity<Student> findById(@PathVariable(name = "id")int id){
+        final Student student = studentService.read(id);
+        return student!=null?
+                new ResponseEntity<>(student, HttpStatus.OK):
+                new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
