@@ -1,8 +1,10 @@
 package com.registationSystem.regSys.Controllers;
 
 import com.registationSystem.regSys.Models.Group;
+import com.registationSystem.regSys.Models.Lesson;
 import com.registationSystem.regSys.Models.Student;
 import com.registationSystem.regSys.Services.GroupService;
+import com.registationSystem.regSys.Services.LessonService;
 import com.registationSystem.regSys.Services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,14 +18,16 @@ import java.util.List;
 public class StudentController {
     private final StudentService studentService;
     private final GroupService groupService;
+    private final LessonService lessonService;
 
     @Autowired
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public StudentController(StudentService studentService, GroupService groupService) {
+    public StudentController(StudentService studentService, GroupService groupService, LessonService lessonService) {
         this.studentService = studentService;
         this.groupService = groupService;
+        this.lessonService = lessonService;
     }
 
     @PostMapping("/students")
@@ -66,5 +70,12 @@ public class StudentController {
         }
         else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
+    }
+    @GetMapping("/students/{id}/schedule")
+    public ResponseEntity<List<Lesson>> getSchedule(@PathVariable(name = "id")int id) {
+        final List<Lesson> lessonList = lessonService.findByGroupId(studentService.read(id).getGroupId());
+        return lessonList!=null?
+                new ResponseEntity<>(lessonList, HttpStatus.OK):
+                new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

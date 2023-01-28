@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface LessonsRepository extends JpaRepository<Lesson, Integer> {
 
-    List<Lesson> findByCoachId(int id);
+    List<Lesson> findByCoachIdAndIsDone(int id, boolean isDone);
     List<Lesson> findByDate(Date date);
+    List<Lesson> findByGroupId(int id);
 }

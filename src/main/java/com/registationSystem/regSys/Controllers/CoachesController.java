@@ -39,9 +39,13 @@ public class CoachesController {
         return coachService.readAll();
     }
 
-    @GetMapping("/coaches/{id}/shedule")
-    public List<Lesson> getShedule(@RequestParam(name="id")int id){
-        return lessonService.findByCoachId(id);
+    @GetMapping("/coaches/{id}/unfinishedLessons")
+    public List<Lesson> getUnfinishedLessons(@RequestParam(name="id")int id){
+        return lessonService.findByCoachId(id,false);
+    }
+    @GetMapping("/coaches/{id}/finishedLessons")
+    public List<Lesson> getFinishedLessons(@RequestParam(name="id")int id){
+        return lessonService.findByCoachId(id,true);
     }
 
 }

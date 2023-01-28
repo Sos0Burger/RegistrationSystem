@@ -39,10 +39,14 @@ public class LessonService {
         }
         return false;
     }
-    public List<Lesson> findByCoachId(int id){
-        return lessonsRepository.findByCoachId(id);
+    public List<Lesson> findByCoachId(int id, boolean isDone){
+        return lessonsRepository.findByCoachIdAndIsDone(id, isDone);
     }
     public List<Lesson> findByDate(Date date){
         return lessonsRepository.findByDate(date);
+    }
+
+    public List<Lesson> findByGroupId(int id){
+        return lessonsRepository.findByGroupId(id);
     }
 }
