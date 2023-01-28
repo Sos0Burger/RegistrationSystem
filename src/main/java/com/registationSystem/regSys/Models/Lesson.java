@@ -10,26 +10,31 @@ public final class Lesson {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "clientsIdSeq", sequenceName = "clients_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clientsIdSeq")
+    @SequenceGenerator(name = "LessonsIdSeq", sequenceName = "Lessons_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LessonsIdSeq")
     private int id;
     @Column(name = "time")
     private Time time;
     @Column(name = "date")
     private Date date;
-    @Column(name = "coachId")
+    @Column(name = "coachid")
     private int coachId;
-    @Column(name = "absentList")
-    private int[] absentList;
-    @Column(name = "isDone")
+    @Column(name = "absencelist")
+    private int[] absenceList;
+    @Column(name = "groupid")
+    private int groupId;
+    @Column(name = "isdone")
     private boolean isDone;
 
-    public Lesson(int id, Time time, Date date, int coachID, int[] absentList, boolean isDone) {
+    public Lesson(){};
+
+    public Lesson(int id, Time time, Date date, int coachID, int[] absenceList,int groupId, boolean isDone) {
         this.id = id;
         this.time = time;
         this.date = date;
         this.coachId = coachID;
-        this.absentList = absentList;
+        this.absenceList = absenceList;
+        this.groupId = groupId;
         this.isDone = isDone;
     }
 
@@ -49,16 +54,16 @@ public final class Lesson {
         return coachId;
     }
 
-    public int[] getAbsentList() {
-        return absentList;
+    public int[] getAbsenceList() {
+        return absenceList;
     }
 
     public boolean isDone() {
         return isDone;
     }
 
-    public void setAbsentList(int[] absentList) {
-        this.absentList = absentList;
+    public void setAbsenceList(int[] absenceList) {
+        this.absenceList = absenceList;
     }
 
     public void setCoachId(int coachId) {
@@ -75,5 +80,17 @@ public final class Lesson {
 
     public void setTime(Time time) {
         this.time = time;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 }
