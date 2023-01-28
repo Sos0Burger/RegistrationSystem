@@ -12,7 +12,7 @@ public class Coach {
     @SequenceGenerator(name = "Coaches", sequenceName = "Coaches_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CoachesIdSeq")
     private int id;
-    @Column(name = "firstName")
+    @Column(name = "firstname")
     private String name;
     @Column(name = "surname")
     private String surname;
