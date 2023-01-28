@@ -28,12 +28,12 @@ public class CoachesController {
         this.coachService = coachService;
     }
 
-    @PostMapping("/groups")
+    @PostMapping("/coaches")
     public ResponseEntity<?> create(@RequestBody Coach coach) {
         coachService.create(coach);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    @GetMapping("/groups")
+    @GetMapping("/coaches")
     public List<Coach> readAll(){
         return coachService.readAll();
     }
