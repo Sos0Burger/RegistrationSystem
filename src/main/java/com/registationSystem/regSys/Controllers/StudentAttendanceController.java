@@ -15,6 +15,7 @@ public class StudentAttendanceController implements IStudentAttendanceController
 
     private final StudentAttendanceService studentAttendanceService;
 
+
     @Autowired
     StudentAttendanceController(StudentAttendanceService studentAttendanceService){
         this.studentAttendanceService = studentAttendanceService;
@@ -26,8 +27,4 @@ public class StudentAttendanceController implements IStudentAttendanceController
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @Override
-    public List<StudentAttendance> getStudentAttendanceById(int id) {
-        return studentAttendanceService.getByStudentId(id);
-    }
 }

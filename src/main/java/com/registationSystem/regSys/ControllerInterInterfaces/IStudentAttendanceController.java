@@ -11,6 +11,4 @@ public interface IStudentAttendanceController {
     @PostMapping("/studentAttendance")
     ResponseEntity<?> create(@RequestBody List<StudentAttendance> studentAttendanceList);
 
-    @GetMapping("/studentAttendance/{id}")
-    List<StudentAttendance> getStudentAttendanceById(@PathVariable(name = "id")int id);
 }

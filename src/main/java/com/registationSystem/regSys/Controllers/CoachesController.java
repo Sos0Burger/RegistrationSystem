@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class CoachesController implements ICoachesController {
@@ -34,11 +35,15 @@ public class CoachesController implements ICoachesController {
     }
 
     @Override
-    public List<Lesson> getUnfinishedLessons(@RequestParam(name="id")int id){
-        return lessonService.findByCoachId(id,false);
+    public Set<Lesson> getUnfinishedLessons(@RequestParam(name="id")int id){
+        Set<Lesson> lessonSet = coachService.read(id).getLessonList();
+        lessonSet.removeIf(Lesson::isDone);
+        return lessonSet;
     }
     @Override
-    public List<Lesson> getFinishedLessons(@RequestParam(name="id")int id){
-        return lessonService.findByCoachId(id,true);
+    public Set<Lesson> getFinishedLessons(@RequestParam(name="id")int id){
+        Set<Lesson> lessonSet = coachService.read(id).getLessonList();
+        lessonSet.removeIf(lesson -> !lesson.isDone());
+        return lessonSet;
     }
 }

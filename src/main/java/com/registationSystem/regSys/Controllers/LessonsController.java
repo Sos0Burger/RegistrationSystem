@@ -2,11 +2,14 @@ package com.registationSystem.regSys.Controllers;
 
 import com.registationSystem.regSys.ControllerInterInterfaces.ILessonController;
 import com.registationSystem.regSys.Models.Lesson;
+import com.registationSystem.regSys.Services.CoachService;
+import com.registationSystem.regSys.Services.GroupService;
 import com.registationSystem.regSys.Services.LessonService;
 import com.registationSystem.regSys.config.ApplicationSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,13 +22,17 @@ import java.util.List;
 public class LessonsController implements ILessonController {
 
     private final LessonService lessonService;
+    private final GroupService groupService;
+    private final CoachService coachService;
     @Autowired
-    LessonsController(LessonService lessonService){
+    LessonsController(LessonService lessonService, GroupService groupService, CoachService coachService){
         this.lessonService = lessonService;
+        this.groupService = groupService;
+        this.coachService = coachService;
     }
 
     @Override
-    public ResponseEntity<?> create(@RequestBody Lesson lesson) {
+    public ResponseEntity<?> create(@RequestBody Lesson lesson, @PathVariable(name = "coach_id")int coachId, @PathVariable(name = "group_id")int groupId ) {
         List<Lesson> dateLessonsList = lessonService.findByDate(lesson.getDate());
         if(dateLessonsList!=null){
             ArrayList<Time> times = new ArrayList<>();
@@ -42,6 +49,8 @@ public class LessonsController implements ILessonController {
             for(int i = 0;i<times.size()-1;i++){
                 if(toMinutes(times.get(i))+60<=toMinutes(lesson.getTime()) &
                         toMinutes(times.get(i+1))-60>=toMinutes(lesson.getTime())){
+                    lesson.setCoach(coachService.read(coachId));
+                    lesson.setGroup(groupService.read(groupId));
                     lessonService.create(lesson);
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 }

@@ -1,6 +1,7 @@
 package com.registationSystem.regSys.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,9 @@ import lombok.Setter;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "Lessons")
 @Getter
@@ -37,5 +41,9 @@ public final class Lesson {
     @JoinColumn(name = "coach_id")
     @JsonBackReference(value = "coach-lesson")
     private Coach coach;
+
+    @OneToMany(mappedBy = "lesson")
+    @JsonManagedReference(value = "lesson-attendance")
+    private Set<StudentAttendance> attendanceList = new HashSet<>();
 
 }

@@ -16,7 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class StudentAttendance {
     @Id
-    @Column(name = "id")
+    @Column(name = "attendance_id")
     @SequenceGenerator(name = "Students_attendanceIdSeq", sequenceName = "student_attendance_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Students_attendanceIdSeq")
     private int id;
@@ -25,6 +25,11 @@ public class StudentAttendance {
     @JoinColumn(name = "student_id")
     @JsonBackReference("student-attendance")
     private Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "lesson_id")
+    @JsonBackReference("lesson-attendance")
+    private Lesson lesson;
 
     @Column(name = "attend")
     private boolean attend;

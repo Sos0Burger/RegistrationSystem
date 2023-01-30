@@ -10,17 +10,20 @@ import java.util.Set;
 
 
 public interface IStudentController {
-    @GetMapping("/students")
-    List<Student> readAll();
     @PostMapping("/students")
     ResponseEntity<?> create(@RequestBody Student student);
-    @PutMapping("/students")
-    ResponseEntity<?> update(@RequestBody Student student, int id);
+    @GetMapping("/students")
+    List<Student> readAll();
+    @GetMapping("/students/{id}/schedule")
+    Set<Lesson> getSchedule(@PathVariable(name = "id")int id);
     @GetMapping("/students/{id}")
     ResponseEntity<Student> findById(@PathVariable(name = "id")int id);
 
+    @PutMapping("/students")
+    ResponseEntity<?> update(@RequestBody Student student, int id);
+
     @DeleteMapping("/students/{id}")
     ResponseEntity<?> stopStudying(@PathVariable(name = "id")int id);
-    @GetMapping("/students/{id}/schedule")
-    Set<Lesson> getSchedule(@PathVariable(name = "id")int id);
+
+
 }

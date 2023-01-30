@@ -19,14 +19,11 @@ import java.util.Set;
 @RestController
 public class StudentController implements IStudentController {
     private final StudentService studentService;
-    private final GroupService groupService;
-    private final LessonService lessonService;
-
+    private  GroupService groupService;
     @Autowired
-    public StudentController(StudentService studentService, GroupService groupService, LessonService lessonService) {
+    public StudentController(StudentService studentService, GroupService groupService) {
         this.studentService = studentService;
         this.groupService = groupService;
-        this.lessonService = lessonService;
     }
 
     @Override
@@ -61,8 +58,8 @@ public class StudentController implements IStudentController {
     }
     @Override
     public Set<Lesson> getSchedule(@PathVariable(name = "id")int id) {
-        final Set<Lesson> lessonList = studentService.read(id).getGroup().getLessonsList();
+        Set<Lesson> lessonList = groupService.read(studentService.read(id).getGroup().getId()).getLessonsList();
+        lessonList.removeIf(Lesson::isDone);
         return lessonList;
     }
-
 }

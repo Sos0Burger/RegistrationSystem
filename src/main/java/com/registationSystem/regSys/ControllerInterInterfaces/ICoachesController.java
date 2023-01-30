@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ICoachesController {
     @PostMapping("/coaches")
@@ -14,7 +15,7 @@ public interface ICoachesController {
     List<Coach> readAll();
 
     @GetMapping("/coaches/{id}/unfinishedLessons")
-    List<Lesson> getUnfinishedLessons(@RequestParam(name="id")int id);
+    Set<Lesson> getUnfinishedLessons(@RequestParam(name="id")int id);
     @GetMapping("/coaches/{id}/finishedLessons")
-    List<Lesson> getFinishedLessons(@RequestParam(name="id")int id);
+    Set<Lesson> getFinishedLessons(@RequestParam(name="id")int id);
 }
