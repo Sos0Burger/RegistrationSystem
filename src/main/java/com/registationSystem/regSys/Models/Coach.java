@@ -1,10 +1,17 @@
 package com.registationSystem.regSys.Models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "Coaches")
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Coach {
 
     @Id
@@ -21,52 +28,4 @@ public class Coach {
     @Column(name = "email")
     private String email;
 
-    public Coach(){};
-    public Coach(int id, String name, String surname, String phone_number, String email) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.phone_number = phone_number;
-        this.email = email;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
-    }
-
-    public String getPhone_number() {
-        return phone_number;
-    }
 }

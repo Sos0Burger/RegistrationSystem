@@ -1,9 +1,18 @@
 package com.registationSystem.regSys.Models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 
 @Entity
 @Table(name = "students_attendance")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class StudentAttendance {
     @Id
     @Column(name = "id")
@@ -19,44 +28,4 @@ public class StudentAttendance {
 
     @Column(name = "warn")
     private boolean warn;
-
-    public StudentAttendance(){}
-    public StudentAttendance(int id, int student, boolean attend, boolean warn){
-        this.id = id;
-        this.student = student;
-        this.attend = attend;
-        this.warn = warn;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getStudent() {
-        return student;
-    }
-
-    public void setStudent(int student) {
-        this.student = student;
-    }
-
-    public boolean isAttend() {
-        return attend;
-    }
-
-    public void setAttend(boolean attend) {
-        this.attend = attend;
-    }
-
-    public boolean isWarn() {
-        return warn;
-    }
-
-    public void setWarn(boolean warn) {
-        this.warn = warn;
-    }
 }
