@@ -12,5 +12,4 @@ public interface LessonsRepository extends JpaRepository<Lesson, Integer> {
 
     List<Lesson> findByCoachIdAndIsDone(int id, boolean isDone);
     List<Lesson> findByDate(Date date);
-    List<Lesson> findByGroupId(int id);
 }

@@ -1,5 +1,6 @@
 package com.registationSystem.regSys.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,8 +21,10 @@ public class StudentAttendance {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Students_attendanceIdSeq")
     private int id;
 
-    @Column(name = "student")
-    private int student;
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    @JsonBackReference("student-attendance")
+    private Student student;
 
     @Column(name = "attend")
     private boolean attend;

@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -49,40 +49,33 @@ public class GroupsController implements IGroupsController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     @Override
-    public ResponseEntity<?> register(@PathVariable(name = "id")int id, @PathVariable(name = "studentId")int studentId){
-        final Group group = groupService.read(id);
-        final Student student = studentService.read(studentId);
-        if(student.getAge()> group.getMaxAge()|| student.getAge()< group.getMinAge()){
-            //вот это поменять можно на ошибку какую-нибудь
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Age is not acceptable");
+    public ResponseEntity<?> register(@PathVariable(name = "id")int id, @PathVariable(name = "studentId")int studentId) {
+        Group group = groupService.read(id);
+        Student student = studentService.read(studentId);
+        if(!(group.getStudentsList().size()+1<=group.getSize())){
+            if(!(student.getAge()>= group.getMinAge() && student.getAge()<=group.getMaxAge())){
+                return new ResponseEntity<>("Age is not suitable",HttpStatus.NOT_ACCEPTABLE);
+            }
+            return new ResponseEntity<>("Group is full", HttpStatus.NOT_ACCEPTABLE);
+
+        }
+        if(group.getStudentsList().add(student)){
+            groupService.update(group, group.getId());
+            student.setGroup(group);
+            studentService.update(student, student.getId());
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         else {
-            group.setStudentCounter(group.getStudentCounter() + 1);
-            student.setGroupId(id);
-            student.setStudying(true);
-            studentService.update(student, studentId);
-            return new ResponseEntity<>(HttpStatus.OK);
-
+            return new ResponseEntity<>("Student already exist in this group", HttpStatus.CONFLICT);
         }
     }
     @Override
     public ResponseEntity<?> delete(@PathVariable(name = "id")int id){
-        final Group group = groupService.read(id);
-        if (group!=null){
-            groupService.delete(group.getId());
-
-            //Изменяем значения атрибутов студентов,которые находились в группе
-            if(group.getStudentCounter()!=0){
-                List<Student> groupStudents = studentService.findByGroupId(group.getId());
-                for (Student student: groupStudents
-                     ) {
-                    student.setStudying(false);
-                    student.setGroupId(-1);
-                    studentService.update(student, student.getId());
-                }
-            }
-            return new ResponseEntity<>(HttpStatus.OK);
+       Group group = groupService.read(id);
+        for (Student student : group.getStudentsList()) {
+            student.setGroup(null);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        groupService.delete(group.getId());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

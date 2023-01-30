@@ -13,7 +13,7 @@ public interface IGroupsController {
 
     @PutMapping("/groups")
     ResponseEntity<?> update(@RequestBody Group group, int id);
-    @PostMapping("/groups/{id}")
+    @GetMapping("/groups/{id}")
     ResponseEntity<Group> findById(@PathVariable(name = "id")int id);
     @PostMapping("/groups/{id}/{studentId}")
     ResponseEntity<?> register(@PathVariable(name = "id")int id, @PathVariable(name = "studentId")int studentId);

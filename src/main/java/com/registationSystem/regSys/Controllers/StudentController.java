@@ -12,16 +12,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
-public class StudentControllerController implements IStudentController {
+public class StudentController implements IStudentController {
     private final StudentService studentService;
     private final GroupService groupService;
     private final LessonService lessonService;
 
     @Autowired
-    public StudentControllerController(StudentService studentService, GroupService groupService, LessonService lessonService) {
+    public StudentController(StudentService studentService, GroupService groupService, LessonService lessonService) {
         this.studentService = studentService;
         this.groupService = groupService;
         this.lessonService = lessonService;
@@ -52,28 +54,15 @@ public class StudentControllerController implements IStudentController {
     }
 
     @Override
-    public ResponseEntity<?> delete(@PathVariable(name = "id")int id){
-        final Student student = studentService.read(id);
-        if(student!=null){
-            //удаляем студента из таблицы
-            studentService.delete(student.getId());
-            //Уменьшаем количество человек в группе, если он состоял в ней
-            if(student.isStudying()){
-                final Group group = groupService.read(student.getGroupId());
-                group.setStudentCounter(group.getStudentCounter()-1);
-                groupService.update(group, student.getGroupId());
-            }
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+    public ResponseEntity<?> stopStudying(@PathVariable(name = "id")int id){
+        Student student = studentService.read(id);
+        student.setGroup(null);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @Override
-    public ResponseEntity<List<Lesson>> getSchedule(@PathVariable(name = "id")int id) {
-        final List<Lesson> lessonList = lessonService.findByGroupId(studentService.read(id).getGroupId());
-        return lessonList!=null?
-                new ResponseEntity<>(lessonList, HttpStatus.OK):
-                new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public Set<Lesson> getSchedule(@PathVariable(name = "id")int id) {
+        final Set<Lesson> lessonList = studentService.read(id).getGroup().getLessonsList();
+        return lessonList;
     }
 
 }

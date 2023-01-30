@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Configuration;
 public class OpenApiConfig {
 
     @Bean
-    public OpenAPI customCofiguration() {
+    public OpenAPI customConfiguration() {
         return new OpenAPI()
                 .components(new Components())
                 .info(new Info().title("Member API Docs")
-                        .description("Sample REST API documentation"));
+                        );
     }
 }

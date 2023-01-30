@@ -1,10 +1,12 @@
 package com.registationSystem.regSys.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Students")
@@ -14,7 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Student {
     @Id
-    @Column(name = "id")
+    @Column(name = "student_id")
     @SequenceGenerator(name = "StudentsIdSeq", sequenceName = "students_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "StudentsIdSeq")
     private int id;
@@ -24,10 +26,12 @@ public class Student {
     private String surname;
     @Column(name = "age")
     private int age;
-    @Column(name = "groupid")
-    int groupId;
-    @Column(name = "absencecounter")
-    private int absenceCounter;
-    @Column(name = "isstudying")
-    private boolean isStudying;
+    @ManyToOne
+    @JoinColumn(name="group_id")
+    @JsonBackReference("group-student")
+    private Group group;
+
+    @OneToMany(mappedBy = "student")
+    @JsonManagedReference(value = "student-attendance")
+    private Set<StudentAttendance> studentAttendanceList = new HashSet<>();
 }

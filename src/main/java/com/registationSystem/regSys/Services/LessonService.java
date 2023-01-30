@@ -46,7 +46,4 @@ public class LessonService {
         return lessonsRepository.findByDate(date);
     }
 
-    public List<Lesson> findByGroupId(int id){
-        return lessonsRepository.findByGroupId(id);
-    }
 }

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 
 public interface IStudentController {
@@ -19,7 +20,7 @@ public interface IStudentController {
     ResponseEntity<Student> findById(@PathVariable(name = "id")int id);
 
     @DeleteMapping("/students/{id}")
-    ResponseEntity<?> delete(@PathVariable(name = "id")int id);
+    ResponseEntity<?> stopStudying(@PathVariable(name = "id")int id);
     @GetMapping("/students/{id}/schedule")
-    ResponseEntity<List<Lesson>> getSchedule(@PathVariable(name = "id")int id);
+    Set<Lesson> getSchedule(@PathVariable(name = "id")int id);
 }

@@ -1,10 +1,14 @@
 package com.registationSystem.regSys.Models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Groups")
@@ -14,17 +18,22 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Group {
     @Id
-    @Column(name = "id")
+    @Column(name = "group_id")
     @SequenceGenerator(name = "GroupsIdSeq", sequenceName = "Groups_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GroupsIdSeq")
     private int id;
     @Column(name = "size")
     private int size;
-    @Column(name = "minage")
+    @Column(name = "min_age")
     private int minAge;
-    @Column(name = "maxage")
+    @Column(name = "max_age")
     private int maxAge;
-    @Column(name = "studentcounter")
-    private int studentCounter;
+    @OneToMany(mappedBy = "group")
+    @JsonManagedReference("group-student")
+    private Set<Student> studentsList = new HashSet<>();
+
+    @OneToMany(mappedBy = "group")
+    @JsonManagedReference(value = "group-lesson")
+    private Set<Lesson> lessonsList = new HashSet<>();
 
 }

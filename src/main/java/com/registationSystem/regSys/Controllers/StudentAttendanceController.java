@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class StudentAttendanceControllerController implements IStudentAttendanceController {
+public class StudentAttendanceController implements IStudentAttendanceController {
 
     private final StudentAttendanceService studentAttendanceService;
 
     @Autowired
-    StudentAttendanceControllerController(StudentAttendanceService studentAttendanceService){
+    StudentAttendanceController(StudentAttendanceService studentAttendanceService){
         this.studentAttendanceService = studentAttendanceService;
     }
 

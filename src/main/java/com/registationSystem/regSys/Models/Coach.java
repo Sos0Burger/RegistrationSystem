@@ -1,10 +1,14 @@
 package com.registationSystem.regSys.Models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Coaches")
@@ -15,7 +19,7 @@ import lombok.Setter;
 public class Coach {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "coach_id")
     @SequenceGenerator(name = "CoachesIdSeq", sequenceName = "coaches_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CoachesIdSeq")
     private int id;
@@ -27,5 +31,8 @@ public class Coach {
     private String phone_number;
     @Column(name = "email")
     private String email;
+    @OneToMany(mappedBy = "coach")
+    @JsonManagedReference(value = "coach-lesson")
+    private Set<Lesson> lessonList = new HashSet<>();
 
 }
