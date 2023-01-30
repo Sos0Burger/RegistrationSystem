@@ -1,5 +1,6 @@
 package com.registationSystem.regSys.Controllers;
 
+import com.registationSystem.regSys.ControllerInterInterfaces.IGroupsController;
 import com.registationSystem.regSys.Models.Group;
 import com.registationSystem.regSys.Models.Student;
 import com.registationSystem.regSys.Services.GroupService;
@@ -7,19 +8,16 @@ import com.registationSystem.regSys.Services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @RestController
-public class GroupsController {
+public class GroupsController implements IGroupsController {
     private final GroupService groupService;
     private final StudentService studentService;
 
-    @Autowired
-    JdbcTemplate jdbcTemplate;
 
     @Autowired
     public GroupsController(GroupService groupService, StudentService studentService) {
@@ -27,30 +25,30 @@ public class GroupsController {
         this.studentService = studentService;
     }
 
-    @PostMapping("/groups")
+    @Override
     public ResponseEntity<?> create(@RequestBody Group group) {
         groupService.create(group);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/groups")
+    @Override
     public List<Group> readAll(){
         return groupService.readAll();
     }
 
-    @PutMapping("/groups")
+    @Override
     public ResponseEntity<?> update(@RequestBody Group group, int id){
         groupService.update(group, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PostMapping("/groups/{id}")
+    @Override
     public ResponseEntity<Group> findById(@PathVariable(name = "id")int id){
         final Group group = groupService.read(id);
         return group!=null?
                 new ResponseEntity<>(group, HttpStatus.OK):
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    @PostMapping("/groups/{id}/{studentId}")
+    @Override
     public ResponseEntity<?> register(@PathVariable(name = "id")int id, @PathVariable(name = "studentId")int studentId){
         final Group group = groupService.read(id);
         final Student student = studentService.read(studentId);
@@ -67,7 +65,7 @@ public class GroupsController {
 
         }
     }
-    @DeleteMapping("/groups/{id}")
+    @Override
     public ResponseEntity<?> delete(@PathVariable(name = "id")int id){
         final Group group = groupService.read(id);
         if (group!=null){

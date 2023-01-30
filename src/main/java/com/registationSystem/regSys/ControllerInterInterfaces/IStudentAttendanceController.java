@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-public interface IStudentAttendance {
+
+public interface IStudentAttendanceController {
     @PostMapping("/studentAttendance")
     ResponseEntity<?> create(@RequestBody List<StudentAttendance> studentAttendanceList);
 

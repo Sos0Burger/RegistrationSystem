@@ -1,35 +1,30 @@
 package com.registationSystem.regSys.Controllers;
 
+import com.registationSystem.regSys.ControllerInterInterfaces.ILessonController;
 import com.registationSystem.regSys.Models.Lesson;
-import com.registationSystem.regSys.Models.Student;
 import com.registationSystem.regSys.Services.LessonService;
 import com.registationSystem.regSys.config.ApplicationSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 @RestController
-public class LessonsController {
+public class LessonsController implements ILessonController {
 
-    @Autowired
-    JdbcTemplate jdbcTemplate;
     private final LessonService lessonService;
     @Autowired
     LessonsController(LessonService lessonService){
         this.lessonService = lessonService;
     }
 
-    @PostMapping("/Lessons")
+    @Override
     public ResponseEntity<?> create(@RequestBody Lesson lesson) {
         List<Lesson> dateLessonsList = lessonService.findByDate(lesson.getDate());
         if(dateLessonsList!=null){
