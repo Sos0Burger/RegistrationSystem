@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Student {
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "StudentsIdSeq", sequenceName = "Students_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "StudentsIdSeq", sequenceName = "students_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "StudentsIdSeq")
     private int id;
     @Column(name = "firstname")

@@ -47,22 +47,4 @@ public class CoachesController {
     public List<Lesson> getFinishedLessons(@RequestParam(name="id")int id){
         return lessonService.findByCoachId(id,true);
     }
-    @PutMapping("/coaches/{id}/studentCheck")
-    public ResponseEntity<?> studentCheck(@RequestParam(name="id")int id, @RequestBody Lesson lesson, @RequestBody int[] absenceList){
-        if(lesson.getAbsenceList()!=null) {
-            //вот тут возможно можно полегче
-            int[] newAbsenceList = new int[absenceList.length + 1];
-            for (int i : absenceList
-            ) {
-                newAbsenceList[i] = absenceList[i];
-            }
-            newAbsenceList[newAbsenceList.length - 1] = id;
-            lesson.setAbsenceList(newAbsenceList);
-        }
-        else{
-            lesson.setAbsenceList(absenceList);
-        }
-        lessonService.update(lesson, lesson.getId());
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

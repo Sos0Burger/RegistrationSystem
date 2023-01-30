@@ -78,29 +78,5 @@ public class StudentController {
                 new ResponseEntity<>(lessonList, HttpStatus.OK):
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    @PutMapping("/students/{id}/schedule/absence")
-    public ResponseEntity<?> lessonMiss(@PathVariable(name = "id")int id, @RequestBody Lesson lesson){
-        //Обновление количества пропусков у ученика
-        Student student = studentService.read(id);
-        student.setAbsenceCounter(student.getAbsenceCounter()+1);
-        studentService.update(student, id);
 
-
-        if(lesson.getAbsenceList()!=null){
-            //вот тут возможно можно полегче
-            int[] absenceList = lesson.getAbsenceList();
-            int[] newAbsenceList = new int[absenceList.length+1];
-            for (int i:absenceList
-                 ) {
-                newAbsenceList[i] = absenceList[i];
-            }
-            newAbsenceList[newAbsenceList.length-1] = id;
-            lesson.setAbsenceList(newAbsenceList);
-        }
-        else{
-            lesson.setAbsenceList(new int[]{id});
-        }
-        lessonService.update(lesson, lesson.getId());
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

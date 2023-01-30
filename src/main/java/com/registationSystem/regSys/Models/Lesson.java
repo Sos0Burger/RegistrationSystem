@@ -19,8 +19,6 @@ public final class Lesson {
     private Date date;
     @Column(name = "coachid")
     private int coachId;
-    @Column(name = "absencelist")
-    private int[] absenceList;
     @Column(name = "groupid")
     private int groupId;
     @Column(name = "isdone")
@@ -28,12 +26,11 @@ public final class Lesson {
 
     public Lesson(){};
 
-    public Lesson(int id, Time time, Date date, int coachID, int[] absenceList,int groupId, boolean isDone) {
+    public Lesson(int id, Time time, Date date, int coachID, int groupId, boolean isDone) {
         this.id = id;
         this.time = time;
         this.date = date;
         this.coachId = coachID;
-        this.absenceList = absenceList;
         this.groupId = groupId;
         this.isDone = isDone;
     }
@@ -54,16 +51,8 @@ public final class Lesson {
         return coachId;
     }
 
-    public int[] getAbsenceList() {
-        return absenceList;
-    }
-
     public boolean isDone() {
         return isDone;
-    }
-
-    public void setAbsenceList(int[] absenceList) {
-        this.absenceList = absenceList;
     }
 
     public void setCoachId(int coachId) {
