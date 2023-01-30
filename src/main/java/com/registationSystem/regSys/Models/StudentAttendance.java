@@ -11,8 +11,8 @@ public class StudentAttendance {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Students_attendanceIdSeq")
     private int id;
 
-    @Column(name = "student_id")
-    private int student_id;
+    @Column(name = "student")
+    private int student;
 
     @Column(name = "attend")
     private boolean attend;
@@ -21,9 +21,9 @@ public class StudentAttendance {
     private boolean warn;
 
     public StudentAttendance(){}
-    public StudentAttendance(int id, int student_id, boolean attend, boolean warn){
+    public StudentAttendance(int id, int student, boolean attend, boolean warn){
         this.id = id;
-        this.student_id = student_id;
+        this.student = student;
         this.attend = attend;
         this.warn = warn;
     }
@@ -36,12 +36,12 @@ public class StudentAttendance {
         this.id = id;
     }
 
-    public int getStudent_id() {
-        return student_id;
+    public int getStudent() {
+        return student;
     }
 
-    public void setStudent_id(int student_id) {
-        this.student_id = student_id;
+    public void setStudent(int student) {
+        this.student = student;
     }
 
     public boolean isAttend() {

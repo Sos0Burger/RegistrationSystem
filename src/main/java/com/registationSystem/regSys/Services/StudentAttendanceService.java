@@ -5,8 +5,10 @@ import com.registationSystem.regSys.Models.StudentAttendance;
 import com.registationSystem.regSys.Repositories.StudentAttendanceRepository;
 import com.registationSystem.regSys.Repositories.StudentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+@Service
 
 public class StudentAttendanceService {
     @Autowired
@@ -25,7 +27,8 @@ public class StudentAttendanceService {
         return studentAttendanceRepository.findById(id).get();
     }
 
-    public List<StudentAttendance> findByStudentId(int id){
-        return studentAttendanceRepository.findByStudentId(id);
+    public List<StudentAttendance> getByStudentId(int id){
+        return studentAttendanceRepository.findByStudent(id);
     }
+
 }

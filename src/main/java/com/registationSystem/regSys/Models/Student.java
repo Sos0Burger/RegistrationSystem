@@ -23,7 +23,7 @@ public class Student {
     @Column(name = "isstudying")
     private boolean isStudying;
 
-    public Student(){};
+    public Student(){}
 
     public Student(int id, String name, String surname, int age, int absenceCounter, boolean isStudying, int groupId){
         this.id = id;

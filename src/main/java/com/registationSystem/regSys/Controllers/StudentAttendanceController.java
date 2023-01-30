@@ -28,8 +28,7 @@ public class StudentAttendanceController implements IStudentAttendance {
     }
 
     @Override
-    public List<StudentAttendance> getAttendanceByStudentId(int id) {
-        return studentAttendanceService.findByStudentId(id);
-
+    public List<StudentAttendance> getStudentAttendanceById(int id) {
+        return studentAttendanceService.getByStudentId(id);
     }
 }
