@@ -3,8 +3,11 @@ package com.registationSystem.regSys.Controllers;
 import com.registationSystem.regSys.IController.IStudentController;
 import com.registationSystem.regSys.Entities.Lesson;
 import com.registationSystem.regSys.Entities.Student;
+import com.registationSystem.regSys.Models.StudentModel;
+import com.registationSystem.regSys.Parser;
 import com.registationSystem.regSys.Services.GroupService;
 import com.registationSystem.regSys.Services.StudentService;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +17,11 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
+@RequestMapping("/students")
+@Getter
 public class StudentController implements IStudentController {
     private final StudentService studentService;
-    private  GroupService groupService;
+    private final GroupService groupService;
     @Autowired
     public StudentController(StudentService studentService, GroupService groupService) {
         this.studentService = studentService;
@@ -24,8 +29,9 @@ public class StudentController implements IStudentController {
     }
 
     @Override
-    public ResponseEntity<?> create(@RequestBody Student student) {
-        studentService.create(student);
+    public ResponseEntity<?> create(@RequestBody StudentModel studentModel) {
+
+        studentService.create(Parser.StudentModelToStudentEntity(studentModel, this));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

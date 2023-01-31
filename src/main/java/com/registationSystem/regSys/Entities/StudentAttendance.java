@@ -1,7 +1,6 @@
 package com.registationSystem.regSys.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,4 +36,5 @@ public class StudentAttendance {
 
     @Column(name = "warn")
     private boolean warn;
+
 }

@@ -13,7 +13,7 @@ import lombok.Setter;
 public class StudentModel {
     private int id;
     private String firstName;
-    private String secondName;
+    private String surname;
     private int age;
     private int groupId;
     public static StudentModel parseStudentModel(Student student){
