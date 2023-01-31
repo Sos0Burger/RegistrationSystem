@@ -31,7 +31,7 @@ public class StudentController implements IStudentController {
     @Override
     public ResponseEntity<?> create(@RequestBody StudentModel studentModel) {
 
-        studentService.create(Parser.StudentModelToStudentEntity(studentModel, this));
+        studentService.create(Parser.studentModelToStudentEntity(studentModel, this));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -41,15 +41,24 @@ public class StudentController implements IStudentController {
     }
 
     @Override
-    public ResponseEntity<?> update(@RequestBody Student student, int id){
-        studentService.update(student, id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> update(@RequestBody StudentModel studentModel){
+        Student student = studentService.read(studentModel.getId());
+        if(student!=null){
+            student.setAge(studentModel.getAge());
+            student.setName(studentModel.getFirstName());
+            student.setSurname(studentModel.getSurname());
+            student.setGroup(groupService.read(studentModel.getGroupId()));
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @Override
-    public ResponseEntity<Student> findById(@PathVariable(name = "id")int id){
+    public ResponseEntity<StudentModel> findById(@PathVariable(name = "id")int id){
         final Student student = studentService.read(id);
+
         return student!=null?
-                new ResponseEntity<>(student, HttpStatus.OK):
+                new ResponseEntity<>(Parser.studentEntityToStudentModel(student), HttpStatus.OK):
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 

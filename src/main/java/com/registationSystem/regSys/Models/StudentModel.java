@@ -16,7 +16,4 @@ public class StudentModel {
     private String surname;
     private int age;
     private int groupId;
-    public static StudentModel parseStudentModel(Student student){
-        return new StudentModel(student.getId(), student.getName(), student.getSurname(), student.getAge(), student.getGroup().getId());
-    }
 }

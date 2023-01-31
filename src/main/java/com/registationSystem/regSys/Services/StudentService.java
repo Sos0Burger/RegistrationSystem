@@ -21,7 +21,7 @@ public class StudentService {
     }
 
     public Student read(int id) {
-        return studentsRepository.findById(id).get();
+        return studentsRepository.existsById(id)?studentsRepository.findById(id).get():null;
     }
 
     public void update(Student student, int id) {

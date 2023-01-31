@@ -16,7 +16,7 @@ public class StudentAttendanceService {
     }
 
     public StudentAttendance read(int id) {
-        return studentAttendanceRepository.findById(id).get();
+        return studentAttendanceRepository.existsById(id)?studentAttendanceRepository.findById(id).get():null;
     }
 
 }

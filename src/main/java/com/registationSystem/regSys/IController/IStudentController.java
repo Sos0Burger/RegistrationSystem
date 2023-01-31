@@ -18,13 +18,11 @@ public interface IStudentController {
     @GetMapping("/{id}/schedule")
     Set<Lesson> getSchedule(@PathVariable(name = "id")int id);
     @GetMapping("/{id}")
-    ResponseEntity<Student> findById(@PathVariable(name = "id")int id);
+    ResponseEntity<StudentModel> findById(@PathVariable(name = "id")int id);
 
     @PutMapping("")
-    ResponseEntity<?> update(@RequestBody Student student, int id);
+    ResponseEntity<?> update(@RequestBody StudentModel studentModel);
 
     @DeleteMapping("/{id}")
     ResponseEntity<?> stopStudying(@PathVariable(name = "id")int id);
-
-
 }
