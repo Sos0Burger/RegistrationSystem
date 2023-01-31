@@ -1,18 +1,15 @@
 package com.registationSystem.regSys.Controllers;
 
-import com.registationSystem.regSys.ControllerInterInterfaces.IStudentController;
-import com.registationSystem.regSys.Models.Group;
+import com.registationSystem.regSys.IController.IStudentController;
 import com.registationSystem.regSys.Models.Lesson;
 import com.registationSystem.regSys.Models.Student;
 import com.registationSystem.regSys.Services.GroupService;
-import com.registationSystem.regSys.Services.LessonService;
 import com.registationSystem.regSys.Services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

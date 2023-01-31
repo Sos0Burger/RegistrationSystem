@@ -1,6 +1,6 @@
 package com.registationSystem.regSys.Controllers;
 
-import com.registationSystem.regSys.ControllerInterInterfaces.ILessonController;
+import com.registationSystem.regSys.IController.ILessonController;
 import com.registationSystem.regSys.Models.Lesson;
 import com.registationSystem.regSys.Services.CoachService;
 import com.registationSystem.regSys.Services.GroupService;

@@ -1,6 +1,6 @@
 package com.registationSystem.regSys.Controllers;
 
-import com.registationSystem.regSys.ControllerInterInterfaces.ICoachesController;
+import com.registationSystem.regSys.IController.ICoachesController;
 import com.registationSystem.regSys.Models.Coach;
 import com.registationSystem.regSys.Models.Lesson;
 import com.registationSystem.regSys.Services.CoachService;

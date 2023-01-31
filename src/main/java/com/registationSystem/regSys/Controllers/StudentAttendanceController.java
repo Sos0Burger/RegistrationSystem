@@ -1,6 +1,6 @@
 package com.registationSystem.regSys.Controllers;
 
-import com.registationSystem.regSys.ControllerInterInterfaces.IStudentAttendanceController;
+import com.registationSystem.regSys.IController.IStudentAttendanceController;
 import com.registationSystem.regSys.Models.StudentAttendance;
 import com.registationSystem.regSys.Services.StudentAttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;

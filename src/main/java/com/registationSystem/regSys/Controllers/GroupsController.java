@@ -1,6 +1,6 @@
 package com.registationSystem.regSys.Controllers;
 
-import com.registationSystem.regSys.ControllerInterInterfaces.IGroupsController;
+import com.registationSystem.regSys.IController.IGroupsController;
 import com.registationSystem.regSys.Models.Group;
 import com.registationSystem.regSys.Models.Student;
 import com.registationSystem.regSys.Services.GroupService;
@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
 import java.util.List;
 
 @RestController

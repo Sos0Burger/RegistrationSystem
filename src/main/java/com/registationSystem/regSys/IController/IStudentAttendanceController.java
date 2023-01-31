@@ -1,4 +1,4 @@
-package com.registationSystem.regSys.ControllerInterInterfaces;
+package com.registationSystem.regSys.IController;
 
 import com.registationSystem.regSys.Models.StudentAttendance;
 import org.springframework.http.ResponseEntity;
