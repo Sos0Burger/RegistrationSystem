@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -36,8 +37,13 @@ public class StudentController implements IStudentController {
     }
 
    @Override
-    public List<Student> readAll(){
-        return studentService.readAll();
+    public ResponseEntity<List<StudentModel>> readAll(){
+        List<StudentModel> studentModels = new ArrayList<>();
+       for (Student student:studentService.readAll()
+            ) {
+           studentModels.add(Parser.studentEntityToStudentModel(student));
+       }
+       return new ResponseEntity<>(studentModels, HttpStatus.OK);
     }
 
     @Override

@@ -19,6 +19,7 @@ public class Parser {
         );
     }
     public static StudentModel studentEntityToStudentModel(Student student){
-        return new StudentModel(student.getId(), student.getName(), student.getSurname(), student.getAge(), student.getGroup().getId());
+        return new StudentModel(student.getId(), student.getName(), student.getSurname(), student.getAge(),
+                student.getGroup()==null?-1:student.getGroup().getId());
     }
 }

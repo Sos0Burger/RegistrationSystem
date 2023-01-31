@@ -14,7 +14,7 @@ public interface IStudentController {
     @PostMapping()
     ResponseEntity<?> create(@RequestBody StudentModel studentModel);
     @GetMapping()
-    List<Student> readAll();
+    ResponseEntity<List<StudentModel>> readAll();
     @GetMapping("/{id}/schedule")
     Set<Lesson> getSchedule(@PathVariable(name = "id")int id);
     @GetMapping("/{id}")
