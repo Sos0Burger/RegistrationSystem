@@ -16,7 +16,4 @@ public class GroupModel {
     private int size;
     private int minAge;
     private int maxAge;
-    public static GroupModel parseGroupModel(Group group){
-        return new GroupModel(group.getId(), group.getSize(), group.getMinAge(), group.getMaxAge());
-    }
 }

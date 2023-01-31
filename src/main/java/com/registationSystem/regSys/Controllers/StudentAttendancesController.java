@@ -6,14 +6,13 @@ import com.registationSystem.regSys.Services.LessonService;
 import com.registationSystem.regSys.Services.StudentAttendanceService;
 import com.registationSystem.regSys.Services.StudentService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-public class StudentAttendanceController implements IStudentAttendanceController {
+public class StudentAttendancesController implements IStudentAttendanceController {
 
     private final StudentAttendanceService studentAttendanceService;
     private final StudentService studentService;

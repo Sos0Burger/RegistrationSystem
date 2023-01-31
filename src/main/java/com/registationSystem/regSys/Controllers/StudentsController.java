@@ -20,11 +20,11 @@ import java.util.Set;
 @RestController
 @RequestMapping("/students")
 @Getter
-public class StudentController implements IStudentController {
+public class StudentsController implements IStudentController {
     private final StudentService studentService;
     private final GroupService groupService;
     @Autowired
-    public StudentController(StudentService studentService, GroupService groupService) {
+    public StudentsController(StudentService studentService, GroupService groupService) {
         this.studentService = studentService;
         this.groupService = groupService;
     }
@@ -54,6 +54,7 @@ public class StudentController implements IStudentController {
             student.setName(studentModel.getFirstName());
             student.setSurname(studentModel.getSurname());
             student.setGroup(groupService.read(studentModel.getGroupId()));
+            studentService.update(student, student.getId());
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -62,7 +63,6 @@ public class StudentController implements IStudentController {
     @Override
     public ResponseEntity<StudentModel> findById(@PathVariable(name = "id")int id){
         final Student student = studentService.read(id);
-
         return student!=null?
                 new ResponseEntity<>(Parser.studentEntityToStudentModel(student), HttpStatus.OK):
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
