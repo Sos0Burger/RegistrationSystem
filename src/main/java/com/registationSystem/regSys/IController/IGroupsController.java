@@ -1,6 +1,6 @@
 package com.registationSystem.regSys.IController;
 
-import com.registationSystem.regSys.Models.Group;
+import com.registationSystem.regSys.Entities.Group;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.registationSystem.regSys.Services;
 
-import com.registationSystem.regSys.Models.Coach;
+import com.registationSystem.regSys.Entities.Coach;
 import com.registationSystem.regSys.Repositories.CoachesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

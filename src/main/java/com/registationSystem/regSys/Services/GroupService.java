@@ -1,6 +1,6 @@
 package com.registationSystem.regSys.Services;
 
-import com.registationSystem.regSys.Models.Group;
+import com.registationSystem.regSys.Entities.Group;
 import com.registationSystem.regSys.Repositories.GroupsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

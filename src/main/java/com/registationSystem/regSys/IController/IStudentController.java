@@ -1,7 +1,7 @@
 package com.registationSystem.regSys.IController;
 
-import com.registationSystem.regSys.Models.Lesson;
-import com.registationSystem.regSys.Models.Student;
+import com.registationSystem.regSys.Entities.Lesson;
+import com.registationSystem.regSys.Entities.Student;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

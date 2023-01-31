@@ -1,8 +1,8 @@
 package com.registationSystem.regSys.Controllers;
 
 import com.registationSystem.regSys.IController.IStudentController;
-import com.registationSystem.regSys.Models.Lesson;
-import com.registationSystem.regSys.Models.Student;
+import com.registationSystem.regSys.Entities.Lesson;
+import com.registationSystem.regSys.Entities.Student;
 import com.registationSystem.regSys.Services.GroupService;
 import com.registationSystem.regSys.Services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,29 +1,28 @@
 package com.registationSystem.regSys.Controllers;
 
 import com.registationSystem.regSys.IController.IStudentAttendanceController;
-import com.registationSystem.regSys.Models.StudentAttendance;
+import com.registationSystem.regSys.Entities.StudentAttendance;
+import com.registationSystem.regSys.Services.LessonService;
 import com.registationSystem.regSys.Services.StudentAttendanceService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.registationSystem.regSys.Services.StudentService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
+@AllArgsConstructor
 public class StudentAttendanceController implements IStudentAttendanceController {
 
     private final StudentAttendanceService studentAttendanceService;
-
-
-    @Autowired
-    StudentAttendanceController(StudentAttendanceService studentAttendanceService){
-        this.studentAttendanceService = studentAttendanceService;
-    }
+    private final StudentService studentService;
+    private final LessonService lessonService;
 
     @Override
-    public ResponseEntity<?> create(List<StudentAttendance> studentAttendanceList) {
-        studentAttendanceService.create(studentAttendanceList);
+    public ResponseEntity<?> create(StudentAttendance studentAttendance, int lessonId, int studentId) {
+        studentAttendance.setStudent(studentService.read(studentId));
+        studentAttendance.setLesson(lessonService.read(lessonId));
+        studentAttendanceService.create(studentAttendance);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

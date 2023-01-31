@@ -1,14 +1,12 @@
 package com.registationSystem.regSys.IController;
 
-import com.registationSystem.regSys.Models.StudentAttendance;
+import com.registationSystem.regSys.Entities.StudentAttendance;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 
 public interface IStudentAttendanceController {
-    @PostMapping("/studentAttendance")
-    ResponseEntity<?> create(@RequestBody List<StudentAttendance> studentAttendanceList);
+    @PostMapping("/studentAttendance/{lessonId}/{studentId}")
+    ResponseEntity<?> create(@RequestBody StudentAttendance studentAttendance,@PathVariable(name = "lessonId")int lessonId, @PathVariable(name = "studentId")int studentId);
 
 }

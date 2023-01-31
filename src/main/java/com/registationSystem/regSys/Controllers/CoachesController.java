@@ -1,8 +1,9 @@
 package com.registationSystem.regSys.Controllers;
 
 import com.registationSystem.regSys.IController.ICoachesController;
-import com.registationSystem.regSys.Models.Coach;
-import com.registationSystem.regSys.Models.Lesson;
+import com.registationSystem.regSys.Entities.Coach;
+import com.registationSystem.regSys.Entities.Lesson;
+import com.registationSystem.regSys.Models.GroupModel;
 import com.registationSystem.regSys.Services.CoachService;
 import com.registationSystem.regSys.Services.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;

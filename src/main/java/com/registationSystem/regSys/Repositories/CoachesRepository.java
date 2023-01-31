@@ -1,6 +1,6 @@
 package com.registationSystem.regSys.Repositories;
 
-import com.registationSystem.regSys.Models.Coach;
+import com.registationSystem.regSys.Entities.Coach;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
