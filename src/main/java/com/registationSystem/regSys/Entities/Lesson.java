@@ -31,12 +31,13 @@ public final class Lesson {
     private Time time;
     @Column(name = "date")
     private Date date;
+    @Column(name = "is_done")
+    private boolean isDone;
+
     @ManyToOne
     @JoinColumn(name = "group_id")
     @JsonBackReference(value = "group-lesson")
     private Group group;
-    @Column(name = "is_done")
-    private boolean isDone;
 
     @ManyToOne
     @JoinColumn(name = "coach_id")

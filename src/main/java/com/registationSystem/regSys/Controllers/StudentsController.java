@@ -3,6 +3,7 @@ package com.registationSystem.regSys.Controllers;
 import com.registationSystem.regSys.IController.IStudentController;
 import com.registationSystem.regSys.Entities.Lesson;
 import com.registationSystem.regSys.Entities.Student;
+import com.registationSystem.regSys.Models.LessonModel;
 import com.registationSystem.regSys.Models.StudentModel;
 import com.registationSystem.regSys.Parser;
 import com.registationSystem.regSys.Services.GroupService;
@@ -75,9 +76,14 @@ public class StudentsController implements IStudentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @Override
-    public Set<Lesson> getSchedule(@PathVariable(name = "id")int id) {
+    public ResponseEntity<List<LessonModel>> getSchedule(@PathVariable(name = "id")int id) {
+        List<LessonModel> lessonModels = new ArrayList<>();
         Set<Lesson> lessonList = groupService.read(studentService.read(id).getGroup().getId()).getLessonsList();
         lessonList.removeIf(Lesson::isDone);
-        return lessonList;
+        for (Lesson lesson:lessonList
+             ) {
+            lessonModels.add(Parser.lessonEntityToLessonModel(lesson));
+        }
+        return new ResponseEntity<>(lessonModels, HttpStatus.OK);
     }
 }

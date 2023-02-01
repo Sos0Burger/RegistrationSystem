@@ -22,7 +22,9 @@ public class LessonService {
     }
 
     public Lesson read(int id) {
-        return lessonsRepository.findById(id).get();
+        return lessonsRepository.existsById(id)?
+            lessonsRepository.findById(id).get():
+            null;
     }
 
     public void update(Lesson lesson, int id) {

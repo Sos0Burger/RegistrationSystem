@@ -16,7 +16,4 @@ public class CoachModel {
     private String surname;
     private String phoneNumber;
     private String email;
-    public static CoachModel parseCoachModel(Coach coach){
-        return new CoachModel(coach.getId(), coach.getName(), coach.getSurname(), coach.getPhone_number(), coach.getPhone_number());
-    }
 }

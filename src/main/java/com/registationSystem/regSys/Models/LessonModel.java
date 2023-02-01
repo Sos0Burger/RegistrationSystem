@@ -20,8 +20,4 @@ public class LessonModel {
     private int groupId;
     private boolean isDone;
     private String coachName;
-    public static LessonModel parseLessonModel(Lesson lesson){
-        return new LessonModel(lesson.getId(), lesson.getTime(), lesson.getDate(), lesson.getGroup().getId(), lesson.isDone(),
-                lesson.getCoach().getName()+lesson.getCoach().getSurname());
-    }
 }

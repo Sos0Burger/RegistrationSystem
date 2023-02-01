@@ -19,7 +19,9 @@ public class CoachService {
             return CoachesRepository.findAll();
         }
     public Coach read(int id) {
-        return CoachesRepository.findById(id).get();
+        return CoachesRepository.existsById(id)?
+                CoachesRepository.findById(id).get():
+                null;
     }
 
     public void update(Coach coach, int id) {
