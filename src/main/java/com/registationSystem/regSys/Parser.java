@@ -1,18 +1,10 @@
 package com.registationSystem.regSys;
 
 
-import com.registationSystem.regSys.Controllers.CoachesController;
-import com.registationSystem.regSys.Controllers.GroupsController;
-import com.registationSystem.regSys.Controllers.LessonsController;
-import com.registationSystem.regSys.Controllers.StudentsController;
-import com.registationSystem.regSys.Entities.Coach;
-import com.registationSystem.regSys.Entities.Group;
-import com.registationSystem.regSys.Entities.Lesson;
-import com.registationSystem.regSys.Entities.Student;
-import com.registationSystem.regSys.Models.CoachModel;
-import com.registationSystem.regSys.Models.GroupModel;
-import com.registationSystem.regSys.Models.LessonModel;
-import com.registationSystem.regSys.Models.StudentModel;
+import com.registationSystem.regSys.Controllers.*;
+import com.registationSystem.regSys.Entities.*;
+import com.registationSystem.regSys.Models.*;
+import com.registationSystem.regSys.Services.StudentAttendanceService;
 
 public class Parser {
     public static Student studentModelToStudentEntity(StudentModel studentModel, StudentsController studentsController){
@@ -66,6 +58,7 @@ public class Parser {
                 lesson.getCoach().getName()+"\s"+lesson.getCoach().getSurname());
     }
 
+
     public static Coach coachModelToCoachEntity(CoachModel coachModel, CoachesController coachesController){
         return new Coach(coachModel.getId(), coachModel.getName(), coachModel.getSurname(), coachModel.getPhoneNumber(), coachModel.getEmail(),
                 coachesController.getCoachService().read(coachModel.getId())==null?
@@ -75,5 +68,29 @@ public class Parser {
     }
     public static CoachModel coachToCoachModel(Coach coach){
         return new CoachModel(coach.getId(), coach.getName(), coach.getSurname(), coach.getPhone_number(), coach.getPhone_number());
+    }
+
+
+    public static StudentAttendance studentAttendanceModelToStudentAttendanceEntity(StudentAttendanceModel studentAttendanceModel, StudentAttendancesController studentAttendancesController){
+        return new StudentAttendance(studentAttendanceModel.getId(),
+                studentAttendancesController.getStudentService().read(studentAttendanceModel.getLessonId())==null?
+                        null:
+                        studentAttendancesController.getStudentService().read(studentAttendanceModel.getStudentId()),
+                studentAttendancesController.getLessonService().read(studentAttendanceModel.getLessonId())==null?
+                        null:
+                        studentAttendancesController.getLessonService().read(studentAttendanceModel.getLessonId()),
+                studentAttendanceModel.isAttend(), studentAttendanceModel.isWarn()
+        );
+    }
+    public static StudentAttendanceModel studentAttendanceEntityToStudentAttendanceModel(StudentAttendance studentAttendance){
+        return new StudentAttendanceModel(studentAttendance.getId(),
+                studentAttendance.getStudent().getId(),
+                studentAttendance.getLesson().getId(),
+                studentAttendance.getStudent().getName()+"\s"+studentAttendance.getStudent().getSurname(),
+                studentAttendance.getLesson().getDate(),
+                studentAttendance.getLesson().getTime(),
+                studentAttendance.isAttend(),
+                studentAttendance.isWarn()
+        );
     }
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-
 public class StudentAttendanceService {
     @Autowired
     private StudentAttendanceRepository studentAttendanceRepository;
@@ -17,6 +16,12 @@ public class StudentAttendanceService {
 
     public StudentAttendance read(int id) {
         return studentAttendanceRepository.existsById(id)?studentAttendanceRepository.findById(id).get():null;
+    }
+    public void update(StudentAttendance studentAttendance, int id){
+        if (studentAttendanceRepository.existsById(id)) {
+            studentAttendance.setId(id);
+            studentAttendanceRepository.save(studentAttendance);
+        }
     }
 
 }
