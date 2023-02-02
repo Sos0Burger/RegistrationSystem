@@ -1,7 +1,7 @@
 package com.registationSystem.regSys.Services;
 
-import com.registationSystem.regSys.Entities.Coach;
-import com.registationSystem.regSys.Repositories.CoachesRepository;
+import com.registationSystem.regSys.dao.CoachDAO;
+import com.registationSystem.regSys.repository.CoachesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,23 +11,23 @@ public class CoachService {
     @Autowired
     private CoachesRepository CoachesRepository;
 
-    public void create(Coach coach) {
-        CoachesRepository.save(coach);
+    public void create(CoachDAO coachDAO) {
+        CoachesRepository.save(coachDAO);
     }
 
-    public List<Coach> readAll() {
+    public List<CoachDAO> readAll() {
             return CoachesRepository.findAll();
         }
-    public Coach read(int id) {
+    public CoachDAO read(int id) {
         return CoachesRepository.existsById(id)?
                 CoachesRepository.findById(id).get():
                 null;
     }
 
-    public void update(Coach coach, int id) {
+    public void update(CoachDAO coachDAO, int id) {
         if (CoachesRepository.existsById(id)) {
-            coach.setId(id);
-            CoachesRepository.save(coach);
+            coachDAO.setId(id);
+            CoachesRepository.save(coachDAO);
         }
     }
 

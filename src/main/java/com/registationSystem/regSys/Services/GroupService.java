@@ -1,7 +1,7 @@
 package com.registationSystem.regSys.Services;
 
-import com.registationSystem.regSys.Entities.Group;
-import com.registationSystem.regSys.Repositories.GroupsRepository;
+import com.registationSystem.regSys.dao.GroupDAO;
+import com.registationSystem.regSys.repository.GroupsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,22 +12,22 @@ public class GroupService {
     @Autowired
     private GroupsRepository groupsRepository;
 
-    public void create(Group group) {
-        groupsRepository.save(group);
+    public void create(GroupDAO groupDAO) {
+        groupsRepository.save(groupDAO);
     }
 
-    public List<Group> readAll() {
+    public List<GroupDAO> readAll() {
         return groupsRepository.findAll();
     }
 
-    public Group read(int id) {
+    public GroupDAO read(int id) {
         return groupsRepository.existsById(id)?groupsRepository.findById(id).get():null;
     }
 
-    public void update(Group group, int id) {
+    public void update(GroupDAO groupDAO, int id) {
         if (groupsRepository.existsById(id)) {
-            group.setId(id);
-            groupsRepository.save(group);
+            groupDAO.setId(id);
+            groupsRepository.save(groupDAO);
         }
     }
 

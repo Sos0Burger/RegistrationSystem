@@ -1,33 +1,37 @@
 package com.registationSystem.regSys.Services;
 
-import com.registationSystem.regSys.Entities.Student;
-import com.registationSystem.regSys.Repositories.StudentsRepository;
+import com.registationSystem.regSys.dao.StudentDAO;
+import com.registationSystem.regSys.repository.StudentsRepository;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@NoArgsConstructor
+@Component
 public class StudentService {
     @Autowired
     private StudentsRepository studentsRepository;
 
-    public void create(Student student) {
-        studentsRepository.save(student);
+    public void create(StudentDAO studentDAO) {
+        studentsRepository.save(studentDAO);
     }
 
-    public List<Student> readAll() {
+    public List<StudentDAO> readAll() {
         return studentsRepository.findAll();
     }
 
-    public Student read(int id) {
+    public StudentDAO read(int id) {
         return studentsRepository.existsById(id)?studentsRepository.findById(id).get():null;
     }
 
-    public void update(Student student, int id) {
+    public void update(StudentDAO studentDAO, int id) {
         if (studentsRepository.existsById(id)) {
-            student.setId(id);
-            studentsRepository.save(student);
+            studentDAO.setId(id);
+            studentsRepository.save(studentDAO);
         }
     }
 
@@ -38,7 +42,7 @@ public class StudentService {
         }
         return false;
     }
-    public List<Student> findByGroupId(int id){
+    public List<StudentDAO> findByGroupId(int id){
         return studentsRepository.findByGroupId(id);
     }
 }

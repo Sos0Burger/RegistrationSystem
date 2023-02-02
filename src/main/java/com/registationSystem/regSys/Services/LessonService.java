@@ -1,7 +1,7 @@
 package com.registationSystem.regSys.Services;
 
-import com.registationSystem.regSys.Entities.Lesson;
-import com.registationSystem.regSys.Repositories.LessonsRepository;
+import com.registationSystem.regSys.dao.LessonDAO;
+import com.registationSystem.regSys.repository.LessonsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,24 +13,24 @@ public class LessonService {
     @Autowired
     private LessonsRepository lessonsRepository;
 
-    public void create(Lesson lesson) {
-        lessonsRepository.save(lesson);
+    public void create(LessonDAO lessonDAO) {
+        lessonsRepository.save(lessonDAO);
     }
 
-    public List<Lesson> readAll() {
+    public List<LessonDAO> readAll() {
         return lessonsRepository.findAll();
     }
 
-    public Lesson read(int id) {
+    public LessonDAO read(int id) {
         return lessonsRepository.existsById(id)?
             lessonsRepository.findById(id).get():
             null;
     }
 
-    public void update(Lesson lesson, int id) {
+    public void update(LessonDAO lessonDAO, int id) {
         if (lessonsRepository.existsById(id)) {
-            lesson.setId(id);
-            lessonsRepository.save(lesson);
+            lessonDAO.setId(id);
+            lessonsRepository.save(lessonDAO);
         }
     }
 
@@ -41,7 +41,7 @@ public class LessonService {
         }
         return false;
     }
-    public List<Lesson> findByDate(Date date){
+    public List<LessonDAO> findByDate(Date date){
         return lessonsRepository.findByDate(date);
     }
 
