@@ -3,16 +3,19 @@ package com.registationSystem.regSys.rest.impl;
 import com.registationSystem.regSys.dao.GroupDAO;
 import com.registationSystem.regSys.dao.StudentDAO;
 import com.registationSystem.regSys.dto.rq.RqGroupDTO;
+import com.registationSystem.regSys.dto.rq.RqStudentDTO;
 import com.registationSystem.regSys.dto.rs.RsGroupDTO;
 import com.registationSystem.regSys.mapper.Mapper;
+import com.registationSystem.regSys.rest.GroupApi;
 import com.registationSystem.regSys.service.GroupService;
 import com.registationSystem.regSys.service.StudentService;
-import com.registationSystem.regSys.rest.GroupApi;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +82,8 @@ public class GroupController implements GroupApi {
         if(groupDAO.getStudentsList().add(studentDAO)){
             groupService.update(groupDAO, groupDAO.getId());
             studentDAO.setGroupDAO(groupDAO);
-            studentService.update(studentDAO, studentDAO.getId());
+            RqStudentDTO rqStudentDTO = new RqStudentDTO(studentDAO.getName(), studentDAO.getSurname(), studentDAO.getAge(), studentDAO.getGroupDAO().getId());
+            studentService.update(rqStudentDTO, studentId);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         else {

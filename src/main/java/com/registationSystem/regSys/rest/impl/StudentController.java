@@ -5,6 +5,7 @@ import com.registationSystem.regSys.dao.StudentDAO;
 import com.registationSystem.regSys.dto.rq.RqStudentDTO;
 import com.registationSystem.regSys.dto.rs.RsLessonDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
+import com.registationSystem.regSys.exception.ControllerException;
 import com.registationSystem.regSys.mapper.Mapper;
 import com.registationSystem.regSys.service.StudentService;
 import com.registationSystem.regSys.service.impl.GroupServiceImpl;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @RestController
@@ -32,8 +34,13 @@ public class StudentController implements StudentApi {
     }
 
     @Override
-    public ResponseEntity<Void> create(RqStudentDTO rqStudentDTO) {
-        studentService.create(Mapper.studentDTOToStudentDAO(rqStudentDTO));
+    public ResponseEntity<Void> create(RqStudentDTO rqStudentDTO) throws ControllerException {
+        try {
+            studentService.create(rqStudentDTO);
+        }
+        catch (NoSuchElementException ex){
+            throw new ControllerException(ex.getMessage());
+        }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -48,18 +55,14 @@ public class StudentController implements StudentApi {
     }
 
     @Override
-    public ResponseEntity<?> update(RqStudentDTO rqStudentDTO, int id){
-        StudentDAO studentDAO = studentService.read(id);
-        if(studentDAO !=null){
-            studentDAO.setAge(rqStudentDTO.getAge());
-            studentDAO.setName(rqStudentDTO.getFirstName());
-            studentDAO.setSurname(rqStudentDTO.getSurname());
-            studentDAO.setGroupDAO(groupService.read(rqStudentDTO.getGroupId()));
-            studentService.update(studentDAO, studentDAO.getId());
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> update(RqStudentDTO rqStudentDTO, int id) throws ControllerException {
+        try {
+            studentService.update(rqStudentDTO, id);
         }
+        catch (NoSuchElementException ex){
+            throw new ControllerException(ex.getMessage());
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @Override
     public ResponseEntity<RsStudentDTO> findById(@PathVariable(name = "id")int id){

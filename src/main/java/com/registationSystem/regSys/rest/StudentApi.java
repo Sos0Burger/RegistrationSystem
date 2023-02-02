@@ -3,6 +3,7 @@ package com.registationSystem.regSys.rest;
 import com.registationSystem.regSys.dto.rq.RqStudentDTO;
 import com.registationSystem.regSys.dto.rs.RsLessonDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
+import com.registationSystem.regSys.exception.ControllerException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +12,9 @@ import java.util.List;
 @RequestMapping("/students")
 public interface StudentApi {
     @PostMapping
-    ResponseEntity<?> create(@RequestBody RqStudentDTO rqStudentDTO);
+    ResponseEntity<?> create(@RequestBody RqStudentDTO rqStudentDTO) throws ControllerException;
     @PutMapping
-    ResponseEntity<?> update(@RequestBody RqStudentDTO rqStudentDTO, @PathVariable(name = "id")int id);
+    ResponseEntity<?> update(@RequestBody RqStudentDTO rqStudentDTO, @PathVariable(name = "id")int id) throws ControllerException;
     @GetMapping
     ResponseEntity<List<RsStudentDTO>> readAll();
     @GetMapping("/{id}/schedule")
