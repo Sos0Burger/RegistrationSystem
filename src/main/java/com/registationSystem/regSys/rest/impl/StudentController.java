@@ -1,15 +1,15 @@
-package com.registationSystem.regSys.controller.controllerImpl;
+package com.registationSystem.regSys.rest.impl;
 
 import com.registationSystem.regSys.dao.LessonDAO;
 import com.registationSystem.regSys.dao.StudentDAO;
+import com.registationSystem.regSys.dto.rq.RqStudentDTO;
 import com.registationSystem.regSys.dto.rs.RsLessonDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
-import com.registationSystem.regSys.Converter;
-import com.registationSystem.regSys.Services.GroupService;
-import com.registationSystem.regSys.Services.StudentService;
-import com.registationSystem.regSys.controller.StudentController;
+import com.registationSystem.regSys.mapper.Mapper;
+import com.registationSystem.regSys.service.StudentService;
+import com.registationSystem.regSys.service.impl.GroupServiceImpl;
+import com.registationSystem.regSys.rest.StudentApi;
 import lombok.Getter;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,42 +20,41 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/students")
 @Getter
-public class StudentsControllerImpl implements StudentController {
+public class StudentController implements StudentApi {
     private final StudentService studentService;
-    private final GroupService groupService;
+    private final GroupServiceImpl groupService;
+
     @Autowired
-    public StudentsControllerImpl(StudentService studentService, GroupService groupService) {
+    public StudentController(StudentService studentService, GroupServiceImpl groupService) {
         this.studentService = studentService;
         this.groupService = groupService;
     }
 
     @Override
-    public Response create(@RequestBody RsStudentDTO rsStudentDTO) {
-
-        studentService.create(Converter.studentDTOToStudentDAO(rsStudentDTO, this));
-        return new Response(HttpStatus.OK.value());
+    public ResponseEntity<Void> create(RqStudentDTO rqStudentDTO) {
+        studentService.create(Mapper.studentDTOToStudentDAO(rqStudentDTO));
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
    @Override
     public ResponseEntity<List<RsStudentDTO>> readAll(){
         List<RsStudentDTO> rsStudentDTOS = new ArrayList<>();
-       for (StudentDAO studentDAO :studentService.readAll()
+       for (StudentDAO studentDAO : studentService.readAll()
             ) {
-           rsStudentDTOS.add(Converter.studentEntityToStudentModel(studentDAO));
+           rsStudentDTOS.add(Mapper.studentDAOToStudentDTO(studentDAO));
        }
        return new ResponseEntity<>(rsStudentDTOS, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<?> update(@RequestBody RsStudentDTO rsStudentDTO){
-        StudentDAO studentDAO = studentService.read(rsStudentDTO.getId());
+    public ResponseEntity<?> update(RqStudentDTO rqStudentDTO, int id){
+        StudentDAO studentDAO = studentService.read(id);
         if(studentDAO !=null){
-            studentDAO.setAge(rsStudentDTO.getAge());
-            studentDAO.setName(rsStudentDTO.getFirstName());
-            studentDAO.setSurname(rsStudentDTO.getSurname());
-            studentDAO.setGroupDAO(groupService.read(rsStudentDTO.getGroupId()));
+            studentDAO.setAge(rqStudentDTO.getAge());
+            studentDAO.setName(rqStudentDTO.getFirstName());
+            studentDAO.setSurname(rqStudentDTO.getSurname());
+            studentDAO.setGroupDAO(groupService.read(rqStudentDTO.getGroupId()));
             studentService.update(studentDAO, studentDAO.getId());
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -64,10 +63,7 @@ public class StudentsControllerImpl implements StudentController {
     }
     @Override
     public ResponseEntity<RsStudentDTO> findById(@PathVariable(name = "id")int id){
-        final StudentDAO studentDAO = studentService.read(id);
-        return studentDAO !=null?
-                new ResponseEntity<>(Converter.studentEntityToStudentModel(studentDAO), HttpStatus.OK):
-                new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(Mapper.studentDAOToStudentDTO(studentService.read(id)), HttpStatus.OK);
     }
 
     @Override
@@ -80,10 +76,10 @@ public class StudentsControllerImpl implements StudentController {
     public ResponseEntity<List<RsLessonDTO>> getSchedule(@PathVariable(name = "id")int id) {
         List<RsLessonDTO> rsLessonDTOS = new ArrayList<>();
         Set<LessonDAO> lessonDAOList = groupService.read(studentService.read(id).getGroupDAO().getId()).getLessonsList();
-        lessonDAOList.removeIf(LessonDAO::isDone);
+        lessonDAOList.removeIf(LessonDAO::getIsDone);
         for (LessonDAO lessonDAO : lessonDAOList
              ) {
-            rsLessonDTOS.add(Converter.lessonEntityToLessonModel(lessonDAO));
+            rsLessonDTOS.add(Mapper.lessonDAOToLessonDTO(lessonDAO));
         }
         return new ResponseEntity<>(rsLessonDTOS, HttpStatus.OK);
     }

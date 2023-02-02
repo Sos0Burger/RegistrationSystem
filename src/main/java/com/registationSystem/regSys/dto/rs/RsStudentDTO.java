@@ -10,9 +10,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RsStudentDTO {
-    private int id;
+    private Integer id;
     private String firstName;
     private String surname;
-    private int age;
-    private int groupId;
+    private Integer age;
+    private Integer groupId;
 }

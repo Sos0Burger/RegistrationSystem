@@ -13,13 +13,13 @@ import java.sql.Time;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RsStudentAttendanceDTO {
-    private int id;
-    private int studentId;
-    private int lessonId;
+    private Integer id;
+    private Integer studentId;
+    private Integer lessonId;
     private String studentName;
     private Date date;
     private Time time;
-    private boolean attend;
-    private boolean warn;
+    private Boolean attend;
+    private Boolean warn;
 
 }

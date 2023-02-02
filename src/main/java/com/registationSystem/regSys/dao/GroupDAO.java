@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Groups")
+@Table(name = "groups")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,20 +19,19 @@ import java.util.Set;
 public class GroupDAO {
     @Id
     @Column(name = "group_id")
-    @SequenceGenerator(name = "GroupsIdSeq", sequenceName = "Groups_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GroupsIdSeq")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(name = "size")
-    private int size;
+    private Integer size;
     @Column(name = "min_age")
-    private int minAge;
+    private Integer minAge;
     @Column(name = "max_age")
-    private int maxAge;
-    @OneToMany(mappedBy = "group")
+    private Integer maxAge;
+    @OneToMany(mappedBy = "groupDAO", fetch = FetchType.LAZY)
     @JsonManagedReference("group-student")
     private Set<StudentDAO> studentsList = new HashSet<>();
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "groupDAO", fetch = FetchType.LAZY)
     @JsonManagedReference(value = "group-lesson")
     private Set<LessonDAO> lessonsList = new HashSet<>();
 

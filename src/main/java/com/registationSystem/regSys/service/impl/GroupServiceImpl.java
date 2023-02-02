@@ -1,14 +1,15 @@
-package com.registationSystem.regSys.Services;
+package com.registationSystem.regSys.service.impl;
 
 import com.registationSystem.regSys.dao.GroupDAO;
 import com.registationSystem.regSys.repository.GroupsRepository;
+import com.registationSystem.regSys.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class GroupService {
+public class GroupServiceImpl implements GroupService {
     @Autowired
     private GroupsRepository groupsRepository;
 

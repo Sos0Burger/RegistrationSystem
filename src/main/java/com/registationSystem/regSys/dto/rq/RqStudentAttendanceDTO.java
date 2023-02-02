@@ -10,9 +10,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RqStudentAttendanceDTO {
-    private int studentId;
-    private int lessonId;
-    private boolean attend;
-    private boolean warn;
+    private Integer id;
+    private Integer studentId;
+    private Integer lessonId;
+    private Boolean attend;
+    private Boolean warn;
 
 }

@@ -1,18 +1,16 @@
-package com.registationSystem.regSys.Services;
+package com.registationSystem.regSys.service.impl;
 
 import com.registationSystem.regSys.dao.StudentDAO;
 import com.registationSystem.regSys.repository.StudentsRepository;
-import lombok.NoArgsConstructor;
+import com.registationSystem.regSys.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
 @Service
-@NoArgsConstructor
-@Component
-public class StudentService {
+public class StudentServiceImpl implements StudentService {
     @Autowired
     private StudentsRepository studentsRepository;
 
@@ -41,8 +39,5 @@ public class StudentService {
             return true;
         }
         return false;
-    }
-    public List<StudentDAO> findByGroupId(int id){
-        return studentsRepository.findByGroupId(id);
     }
 }

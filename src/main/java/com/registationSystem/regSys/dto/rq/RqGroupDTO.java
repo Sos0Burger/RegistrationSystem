@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RqGroupDTO {
-    private int size;
-    private int minAge;
-    private int maxAge;
+    private Integer size;
+    private Integer minAge;
+    private Integer maxAge;
 }

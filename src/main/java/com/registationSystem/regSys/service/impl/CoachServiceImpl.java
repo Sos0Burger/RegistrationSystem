@@ -1,13 +1,14 @@
-package com.registationSystem.regSys.Services;
+package com.registationSystem.regSys.service.impl;
 
 import com.registationSystem.regSys.dao.CoachDAO;
 import com.registationSystem.regSys.repository.CoachesRepository;
+import com.registationSystem.regSys.service.CoachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class CoachService {
+public class CoachServiceImpl implements CoachService {
     @Autowired
     private CoachesRepository CoachesRepository;
 

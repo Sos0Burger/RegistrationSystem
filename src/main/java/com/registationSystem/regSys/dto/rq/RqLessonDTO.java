@@ -16,6 +16,6 @@ import java.sql.Time;
 public class RqLessonDTO {
     private Time time;
     private Date date;
-    private int groupId;
-    private String coachId;
+    private Integer groupId;
+    private Integer coachId;
 }

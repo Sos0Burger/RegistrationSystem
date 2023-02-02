@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RsCoachDTO {
-    private int id;
+    private Integer id;
     private String name;
     private String surname;
     private String phoneNumber;

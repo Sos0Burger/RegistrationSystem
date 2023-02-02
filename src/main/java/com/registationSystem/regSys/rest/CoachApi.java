@@ -1,5 +1,6 @@
-package com.registationSystem.regSys.controller;
+package com.registationSystem.regSys.rest;
 
+import com.registationSystem.regSys.dto.rq.RqCoachDTO;
 import com.registationSystem.regSys.dto.rs.RsCoachDTO;
 import com.registationSystem.regSys.dto.rs.RsLessonDTO;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-public interface CoachesController {
-    @PostMapping()
-    ResponseEntity<?> create(@RequestBody RsCoachDTO rsCoachDTO);
+public interface CoachApi {
+
+    @PostMapping
+    ResponseEntity<?> create(@RequestBody RqCoachDTO rqCoachDTO);
+
     @GetMapping()
     ResponseEntity<List<RsCoachDTO>> readAll();
 

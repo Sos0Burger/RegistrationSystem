@@ -1,7 +1,8 @@
-package com.registationSystem.regSys.Services;
+package com.registationSystem.regSys.service.impl;
 
 import com.registationSystem.regSys.dao.LessonDAO;
 import com.registationSystem.regSys.repository.LessonsRepository;
+import com.registationSystem.regSys.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class LessonService {
+public class LessonServiceImpl implements LessonService {
     @Autowired
     private LessonsRepository lessonsRepository;
 

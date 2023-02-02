@@ -12,6 +12,6 @@ import lombok.Setter;
 public class RqStudentDTO {
     private String firstName;
     private String surname;
-    private int age;
+    private Integer age;
     private Integer groupId;
 }

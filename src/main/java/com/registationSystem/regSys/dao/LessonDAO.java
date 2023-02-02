@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Lessons")
+@Table(name = "lessons")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,15 +23,14 @@ public final class LessonDAO {
 
     @Id
     @Column(name = "lesson_id")
-    @SequenceGenerator(name = "LessonsIdSeq", sequenceName = "Lessons_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LessonsIdSeq")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(name = "time")
     private Time time;
     @Column(name = "date")
     private Date date;
     @Column(name = "is_done")
-    private boolean isDone;
+    private Boolean isDone;
 
     @ManyToOne
     @JoinColumn(name = "group_id")
@@ -43,7 +42,7 @@ public final class LessonDAO {
     @JsonBackReference(value = "coach-lesson")
     private CoachDAO coachDAO;
 
-    @OneToMany(mappedBy = "lesson")
+    @OneToMany(mappedBy = "lessonDAO", fetch = FetchType.LAZY)
     @JsonManagedReference(value = "lesson-attendance")
     private Set<StudentAttendanceDAO> attendanceList = new HashSet<>();
 

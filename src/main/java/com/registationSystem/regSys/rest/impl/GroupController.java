@@ -1,13 +1,13 @@
-package com.registationSystem.regSys.controller.controllerImpl;
+package com.registationSystem.regSys.rest.impl;
 
 import com.registationSystem.regSys.dao.GroupDAO;
 import com.registationSystem.regSys.dao.StudentDAO;
+import com.registationSystem.regSys.dto.rq.RqGroupDTO;
 import com.registationSystem.regSys.dto.rs.RsGroupDTO;
-import com.registationSystem.regSys.Converter;
-import com.registationSystem.regSys.Services.GroupService;
-import com.registationSystem.regSys.Services.LessonService;
-import com.registationSystem.regSys.Services.StudentService;
-import com.registationSystem.regSys.controller.GroupsController;
+import com.registationSystem.regSys.mapper.Mapper;
+import com.registationSystem.regSys.service.GroupService;
+import com.registationSystem.regSys.service.StudentService;
+import com.registationSystem.regSys.rest.GroupApi;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,24 +18,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/groups")
 @Getter
-public class GroupsControllerImpl implements GroupsController {
+public class GroupController implements GroupApi {
     private final GroupService groupService;
     private final StudentService studentService;
-    private final LessonService lessonService;
-
 
     @Autowired
-    public GroupsControllerImpl(GroupService groupService, StudentService studentService, LessonService lessonService) {
+    public GroupController(GroupService groupService, StudentService studentService) {
         this.groupService = groupService;
         this.studentService = studentService;
-        this.lessonService = lessonService;
     }
 
     @Override
-    public ResponseEntity<?> create(@RequestBody RsGroupDTO rsGroupDTO) {
-        groupService.create(Converter.groupModelToGroupEntity(rsGroupDTO,this));
+    public ResponseEntity<?> create(@RequestBody RqGroupDTO rqGroupDTO) {
+        groupService.create(Mapper.groupDTOToGroupDAO(rqGroupDTO));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -44,20 +40,18 @@ public class GroupsControllerImpl implements GroupsController {
         List<RsGroupDTO> rsGroupDTOS = new ArrayList<>();
         for (GroupDAO groupDAO :groupService.readAll()
         ) {
-            rsGroupDTOS.add(Converter.groupEntityToGroupModel(groupDAO));
+            rsGroupDTOS.add(Mapper.groupDAOToGroupDTO(groupDAO));
         }
         return new ResponseEntity<>(rsGroupDTOS, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<?> update(@RequestBody RsGroupDTO rsGroupDTO){
-        GroupDAO groupDAO = groupService.read(rsGroupDTO.getId());
+    public ResponseEntity<?> update(@RequestBody RqGroupDTO rqGroupDTO, int id){
+        GroupDAO groupDAO = groupService.read(id);
         if(groupDAO !=null){
-           groupDAO.setSize(rsGroupDTO.getSize());
-           groupDAO.setMinAge(rsGroupDTO.getMinAge());
-           groupDAO.setMaxAge(rsGroupDTO.getMaxAge());
-           groupDAO.setStudentsList(groupService.read(rsGroupDTO.getId()).getStudentsList());
-           groupDAO.setLessonsList(groupService.read(rsGroupDTO.getId()).getLessonsList());
+           groupDAO.setSize(rqGroupDTO.getSize());
+           groupDAO.setMinAge(rqGroupDTO.getMinAge());
+           groupDAO.setMaxAge(rqGroupDTO.getMaxAge());
            groupService.update(groupDAO, groupDAO.getId());
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -68,7 +62,7 @@ public class GroupsControllerImpl implements GroupsController {
     public ResponseEntity<RsGroupDTO> findById(@PathVariable(name = "id")int id){
         final GroupDAO groupDAO = groupService.read(id);
         return groupDAO !=null?
-                new ResponseEntity<>(Converter.groupEntityToGroupModel(groupDAO) , HttpStatus.OK):
+                new ResponseEntity<>(Mapper.groupDAOToGroupDTO(groupDAO) , HttpStatus.OK):
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     @Override

@@ -17,9 +17,8 @@ import lombok.Setter;
 public class StudentAttendanceDAO {
     @Id
     @Column(name = "attendance_id")
-    @SequenceGenerator(name = "Students_attendanceIdSeq", sequenceName = "student_attendance_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Students_attendanceIdSeq")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
@@ -32,9 +31,9 @@ public class StudentAttendanceDAO {
     private LessonDAO lessonDAO;
 
     @Column(name = "attend")
-    private boolean attend;
+    private Boolean attend;
 
     @Column(name = "warn")
-    private boolean warn;
+    private Boolean warn;
 
 }

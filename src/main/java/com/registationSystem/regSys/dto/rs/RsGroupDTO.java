@@ -11,8 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RsGroupDTO {
-    private int id;
-    private int size;
-    private int minAge;
-    private int maxAge;
+    private Integer id;
+    private Integer size;
+    private Integer minAge;
+    private Integer maxAge;
 }

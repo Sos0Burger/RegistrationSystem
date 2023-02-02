@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Coaches")
+@Table(name = "coaches")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,18 +20,17 @@ public class CoachDAO {
 
     @Id
     @Column(name = "coach_id")
-    @SequenceGenerator(name = "CoachesIdSeq", sequenceName = "coaches_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CoachesIdSeq")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(name = "firstname")
     private String name;
     @Column(name = "surname")
     private String surname;
     @Column(name = "phone_number")
-    private String phone_number;
+    private String phoneNumber;
     @Column(name = "email")
     private String email;
-    @OneToMany(mappedBy = "coach")
+    @OneToMany(mappedBy = "coachDAO", fetch = FetchType.LAZY)
     @JsonManagedReference(value = "coach-lesson")
     private Set<LessonDAO> lessonDAOList = new HashSet<>();
 

@@ -1,14 +1,14 @@
-package com.registationSystem.regSys.controller.controllerImpl;
+package com.registationSystem.regSys.rest.impl;
 
 
 import com.registationSystem.regSys.dao.LessonDAO;
-import com.registationSystem.regSys.dto.rs.RsLessonDTO;
-import com.registationSystem.regSys.Converter;
-import com.registationSystem.regSys.Services.CoachService;
-import com.registationSystem.regSys.Services.GroupService;
-import com.registationSystem.regSys.Services.LessonService;
+import com.registationSystem.regSys.dto.rq.RqLessonDTO;
+import com.registationSystem.regSys.mapper.Mapper;
+import com.registationSystem.regSys.service.impl.CoachServiceImpl;
+import com.registationSystem.regSys.service.impl.GroupServiceImpl;
+import com.registationSystem.regSys.service.impl.LessonServiceImpl;
 import com.registationSystem.regSys.config.ApplicationSettings;
-import com.registationSystem.regSys.controller.LessonController;
+import com.registationSystem.regSys.rest.LessonApi;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,33 +24,32 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping("/lessons")
 @Getter
-public class LessonsControllerImpl implements LessonController {
+public class LessonController implements LessonApi {
 
-    private final LessonService lessonService;
-    private final GroupService groupService;
-    private final CoachService coachService;
+    private final LessonServiceImpl lessonService;
+    private final GroupServiceImpl groupService;
+    private final CoachServiceImpl coachService;
     @Autowired
-    LessonsControllerImpl(LessonService lessonService, GroupService groupService, CoachService coachService){
+    LessonController(LessonServiceImpl lessonService, GroupServiceImpl groupService, CoachServiceImpl coachService){
         this.lessonService = lessonService;
         this.groupService = groupService;
         this.coachService = coachService;
     }
 
     @Override
-    public ResponseEntity<?> create(@RequestBody RsLessonDTO rsLessonDTO, @PathVariable(name = "coach_id")int coachId ) {
-        LessonDAO lessonDAO = Converter.lessonModelToLessonEntity(rsLessonDTO, this);
+    public ResponseEntity<?> create(@RequestBody RqLessonDTO rqLessonDTO) {
+        LessonDAO lessonDAO = Mapper.lessonDTOToLessonDAO(rqLessonDTO);
         //Поиск группы по ID
-        if(groupService.read(rsLessonDTO.getGroupId())!=null){
-            lessonDAO.setGroupDAO(groupService.read(rsLessonDTO.getGroupId()));
+        if(groupService.read(rqLessonDTO.getGroupId())!=null){
+            lessonDAO.setGroupDAO(groupService.read(rqLessonDTO.getGroupId()));
         }
         else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         //Поиск тренера по ID
-        if(coachService.read(coachId)!=null){
-            lessonDAO.setCoachDAO(coachService.read(coachId));
+        if(coachService.read(rqLessonDTO.getCoachId())!=null){
+            lessonDAO.setCoachDAO(coachService.read(rqLessonDTO.getCoachId()));
         }
         else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -70,8 +69,8 @@ public class LessonsControllerImpl implements LessonController {
             for(int i = 0;i<times.size()-1;i++){
                 if(toMinutes(times.get(i))+60<=toMinutes(lessonDAO.getTime()) &
                         toMinutes(times.get(i+1))-60>=toMinutes(lessonDAO.getTime())){
-                    lessonDAO.setCoachDAO(coachService.read(coachId));
-                    lessonDAO.setGroupDAO(groupService.read(rsLessonDTO.getGroupId()));
+                    lessonDAO.setCoachDAO(coachService.read(rqLessonDTO.getCoachId()));
+                    lessonDAO.setGroupDAO(groupService.read(rqLessonDTO.getGroupId()));
                     lessonService.create(lessonDAO);
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 }
