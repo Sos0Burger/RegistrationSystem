@@ -1,4 +1,4 @@
-package com.registationSystem.regSys.Models;
+package com.registationSystem.regSys.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -36,4 +36,5 @@ public class StudentAttendance {
 
     @Column(name = "warn")
     private boolean warn;
+
 }

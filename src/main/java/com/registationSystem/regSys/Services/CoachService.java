@@ -1,6 +1,6 @@
 package com.registationSystem.regSys.Services;
 
-import com.registationSystem.regSys.Models.Coach;
+import com.registationSystem.regSys.Entities.Coach;
 import com.registationSystem.regSys.Repositories.CoachesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,9 @@ public class CoachService {
             return CoachesRepository.findAll();
         }
     public Coach read(int id) {
-        return CoachesRepository.findById(id).get();
+        return CoachesRepository.existsById(id)?
+                CoachesRepository.findById(id).get():
+                null;
     }
 
     public void update(Coach coach, int id) {

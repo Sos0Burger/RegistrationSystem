@@ -1,7 +1,9 @@
 package com.registationSystem.regSys.IController;
 
-import com.registationSystem.regSys.Models.Coach;
-import com.registationSystem.regSys.Models.Lesson;
+import com.registationSystem.regSys.Entities.Coach;
+import com.registationSystem.regSys.Entities.Lesson;
+import com.registationSystem.regSys.Models.CoachModel;
+import com.registationSystem.regSys.Models.LessonModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,13 +11,13 @@ import java.util.List;
 import java.util.Set;
 
 public interface ICoachesController {
-    @PostMapping("/coaches")
-    ResponseEntity<?> create(@RequestBody Coach coach);
-    @GetMapping("/coaches")
-    List<Coach> readAll();
+    @PostMapping()
+    ResponseEntity<?> create(@RequestBody CoachModel coachModel);
+    @GetMapping()
+    ResponseEntity<List<CoachModel>> readAll();
 
-    @GetMapping("/coaches/{id}/unfinishedLessons")
-    Set<Lesson> getUnfinishedLessons(@RequestParam(name="id")int id);
-    @GetMapping("/coaches/{id}/finishedLessons")
-    Set<Lesson> getFinishedLessons(@RequestParam(name="id")int id);
+    @GetMapping("/{id}/unfinishedLessons")
+    ResponseEntity<List<LessonModel>> getUnfinishedLessons(@RequestParam(name="id")int id);
+    @GetMapping("/{id}/finishedLessons")
+    ResponseEntity<List<LessonModel>> getFinishedLessons(@RequestParam(name="id")int id);
 }

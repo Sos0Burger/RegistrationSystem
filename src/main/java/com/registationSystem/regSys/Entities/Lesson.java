@@ -1,6 +1,7 @@
-package com.registationSystem.regSys.Models;
+package com.registationSystem.regSys.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,12 +31,13 @@ public final class Lesson {
     private Time time;
     @Column(name = "date")
     private Date date;
+    @Column(name = "is_done")
+    private boolean isDone;
+
     @ManyToOne
     @JoinColumn(name = "group_id")
     @JsonBackReference(value = "group-lesson")
     private Group group;
-    @Column(name = "is_done")
-    private boolean isDone;
 
     @ManyToOne
     @JoinColumn(name = "coach_id")

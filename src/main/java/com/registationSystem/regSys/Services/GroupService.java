@@ -1,6 +1,6 @@
 package com.registationSystem.regSys.Services;
 
-import com.registationSystem.regSys.Models.Group;
+import com.registationSystem.regSys.Entities.Group;
 import com.registationSystem.regSys.Repositories.GroupsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class GroupService {
     }
 
     public Group read(int id) {
-        return groupsRepository.findById(id).get();
+        return groupsRepository.existsById(id)?groupsRepository.findById(id).get():null;
     }
 
     public void update(Group group, int id) {

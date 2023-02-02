@@ -1,34 +1,27 @@
 package com.registationSystem.regSys.Services;
 
-import com.registationSystem.regSys.Models.Student;
-import com.registationSystem.regSys.Models.StudentAttendance;
+import com.registationSystem.regSys.Entities.StudentAttendance;
 import com.registationSystem.regSys.Repositories.StudentAttendanceRepository;
-import com.registationSystem.regSys.Repositories.StudentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 @Service
-
 public class StudentAttendanceService {
     @Autowired
     private StudentAttendanceRepository studentAttendanceRepository;
 
-    public void create(List<StudentAttendance> studentAttendanceList) {
-        for (StudentAttendance item:studentAttendanceList
-             ) {
-            if(!studentAttendanceRepository.existsById(item.getId())){
-                studentAttendanceRepository.save(item);
-            }
-        }
+    public void create(StudentAttendance studentAttendance) {
+        studentAttendanceRepository.save(studentAttendance);
     }
 
     public StudentAttendance read(int id) {
-        return studentAttendanceRepository.findById(id).get();
+        return studentAttendanceRepository.existsById(id)?studentAttendanceRepository.findById(id).get():null;
     }
-
-    public List<StudentAttendance> getByStudentId(int id){
-        return studentAttendanceRepository.findByStudent(id);
+    public void update(StudentAttendance studentAttendance, int id){
+        if (studentAttendanceRepository.existsById(id)) {
+            studentAttendance.setId(id);
+            studentAttendanceRepository.save(studentAttendance);
+        }
     }
 
 }

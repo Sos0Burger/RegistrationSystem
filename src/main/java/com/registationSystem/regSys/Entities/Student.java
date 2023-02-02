@@ -1,4 +1,4 @@
-package com.registationSystem.regSys.Models;
+package com.registationSystem.regSys.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;

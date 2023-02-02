@@ -1,14 +1,14 @@
 package com.registationSystem.regSys.IController;
 
-import com.registationSystem.regSys.Models.StudentAttendance;
+import com.registationSystem.regSys.Entities.StudentAttendance;
+import com.registationSystem.regSys.Models.StudentAttendanceModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 
 public interface IStudentAttendanceController {
-    @PostMapping("/studentAttendance")
-    ResponseEntity<?> create(@RequestBody List<StudentAttendance> studentAttendanceList);
-
+    @PostMapping("")
+    ResponseEntity<?> create(@RequestBody StudentAttendanceModel studentAttendanceModel);
+    @PutMapping("")
+    public ResponseEntity<?> update(@RequestBody StudentAttendanceModel studentAttendanceModel);
 }

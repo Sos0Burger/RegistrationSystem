@@ -1,6 +1,6 @@
 package com.registationSystem.regSys.Services;
 
-import com.registationSystem.regSys.Models.Student;
+import com.registationSystem.regSys.Entities.Student;
 import com.registationSystem.regSys.Repositories.StudentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class StudentService {
     }
 
     public Student read(int id) {
-        return studentsRepository.findById(id).get();
+        return studentsRepository.existsById(id)?studentsRepository.findById(id).get():null;
     }
 
     public void update(Student student, int id) {
