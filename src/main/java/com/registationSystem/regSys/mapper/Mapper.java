@@ -119,7 +119,7 @@ public class Mapper {
 
 
     public static StudentAttendanceDAO studentAttendanceDTOToStudentAttendanceDAO(RqStudentAttendanceDTO rqStudentAttendanceDTO) {
-        return new StudentAttendanceDAO(null,
+        return new StudentAttendanceDAO(rqStudentAttendanceDTO.getId(),
                 studentService.read(rqStudentAttendanceDTO.getStudentId()),
                 lessonService.read(rqStudentAttendanceDTO.getLessonId()),
                 rqStudentAttendanceDTO.getAttend(),
