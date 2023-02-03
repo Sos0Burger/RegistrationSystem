@@ -44,15 +44,7 @@ public class StudentController implements StudentApi {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-   @Override
-    public ResponseEntity<List<RsStudentDTO>> readAll(){
-        List<RsStudentDTO> rsStudentDTOS = new ArrayList<>();
-       for (StudentDAO studentDAO : studentService.readAll()
-            ) {
-           rsStudentDTOS.add(Mapper.studentDAOToStudentDTO(studentDAO));
-       }
-       return new ResponseEntity<>(rsStudentDTOS, HttpStatus.OK);
-    }
+
 
     @Override
     public ResponseEntity<?> update(RqStudentDTO rqStudentDTO, int id) throws ControllerException {
@@ -65,25 +57,17 @@ public class StudentController implements StudentApi {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @Override
+    public ResponseEntity<List<RsStudentDTO>> readAll(){
+        return new ResponseEntity<>(studentService.readAll(),HttpStatus.OK);
+    }
+    @Override
     public ResponseEntity<RsStudentDTO> findById(@PathVariable(name = "id")int id){
         return new ResponseEntity<>(Mapper.studentDAOToStudentDTO(studentService.read(id)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<?> stopStudying(@PathVariable(name = "id")int id){
-        StudentDAO studentDAO = studentService.read(id);
-        studentDAO.setGroupDAO(null);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-    @Override
     public ResponseEntity<List<RsLessonDTO>> getSchedule(@PathVariable(name = "id")int id) {
-        List<RsLessonDTO> rsLessonDTOS = new ArrayList<>();
-        Set<LessonDAO> lessonDAOList = groupService.read(studentService.read(id).getGroupDAO().getId()).getLessonsList();
-        lessonDAOList.removeIf(LessonDAO::getIsDone);
-        for (LessonDAO lessonDAO : lessonDAOList
-             ) {
-            rsLessonDTOS.add(Mapper.lessonDAOToLessonDTO(lessonDAO));
-        }
-        return new ResponseEntity<>(rsLessonDTOS, HttpStatus.OK);
+
+        return new ResponseEntity<>(studentService.getScheduleById(id), HttpStatus.OK);
     }
 }

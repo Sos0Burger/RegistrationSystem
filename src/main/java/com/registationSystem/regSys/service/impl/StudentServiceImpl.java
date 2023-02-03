@@ -1,7 +1,10 @@
 package com.registationSystem.regSys.service.impl;
 
+import com.registationSystem.regSys.dao.LessonDAO;
 import com.registationSystem.regSys.dao.StudentDAO;
 import com.registationSystem.regSys.dto.rq.RqStudentDTO;
+import com.registationSystem.regSys.dto.rs.RsLessonDTO;
+import com.registationSystem.regSys.dto.rs.RsStudentDTO;
 import com.registationSystem.regSys.mapper.Mapper;
 import com.registationSystem.regSys.repository.GroupsRepository;
 import com.registationSystem.regSys.repository.StudentsRepository;
@@ -9,8 +12,10 @@ import com.registationSystem.regSys.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -29,8 +34,13 @@ public class StudentServiceImpl implements StudentService {
         studentsRepository.save(Mapper.studentDTOToStudentDAO(rqStudentDTO));
     }
 
-    public List<StudentDAO> readAll() {
-        return studentsRepository.findAll();
+    public List<RsStudentDTO> readAll() {
+        List<RsStudentDTO> rsStudentDTOS = new ArrayList<>();
+        for (StudentDAO studentDAO : studentsRepository.findAll()
+        ) {
+            rsStudentDTOS.add(Mapper.studentDAOToStudentDTO(studentDAO));
+        }
+        return rsStudentDTOS;
     }
 
     public StudentDAO read(int id) {
@@ -59,11 +69,19 @@ public class StudentServiceImpl implements StudentService {
         studentsRepository.save(studentDAO);
     }
 
-    public boolean delete(int id) {
-        if (studentsRepository.existsById(id)) {
-            studentsRepository.deleteById(id);
-            return true;
+    public void delete(int id) {
+        StudentDAO studentDAO = studentsRepository.findById(id).get();
+        studentDAO.setGroupDAO(null);
+    }
+
+    public List<RsLessonDTO> getScheduleById(int id){
+        List<RsLessonDTO> rsLessonDTOS = new ArrayList<>();
+        Set<LessonDAO> lessonDAOList = groupsRepository.findById(studentsRepository.findById(id).get().getGroupDAO().getId()).get().getLessonsList();
+        lessonDAOList.removeIf(LessonDAO::getIsDone);
+        for (LessonDAO lessonDAO : lessonDAOList
+        ) {
+            rsLessonDTOS.add(Mapper.lessonDAOToLessonDTO(lessonDAO));
         }
-        return false;
+        return rsLessonDTOS;
     }
 }
