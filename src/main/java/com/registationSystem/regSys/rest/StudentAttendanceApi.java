@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.*;
 public interface StudentAttendanceApi {
     @Operation(summary = "Создание посещаемости для студента")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Успешно создано"),
+            @ApiResponse(responseCode = "201", description = "Успешно создано"),
             @ApiResponse(responseCode = "404", description = "Студент не найден"),
             @ApiResponse(responseCode = "404", description = "Занятие не найдено")
-
     })
     @PostMapping
     ResponseEntity<?> create(@RequestBody RqStudentAttendanceDTO rqStudentAttendanceDTO);

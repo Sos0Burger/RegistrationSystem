@@ -25,11 +25,12 @@ public class StudentServiceImpl implements StudentService {
     private GroupsRepository groupsRepository;
 
     public void create(RqStudentDTO rqStudentDTO) throws NoSuchElementException {
-        try {
-            groupsRepository.findById(rqStudentDTO.getGroupId()).get();
-        }
-        catch (NoSuchElementException ex){
-            throw new NoSuchElementException("Группы с таким ID не существует");
+        if(rqStudentDTO.getGroupId()!=null) {
+            try {
+                groupsRepository.findById(rqStudentDTO.getGroupId()).get();
+            } catch (NoSuchElementException ex) {
+                throw new NoSuchElementException("Группы с таким ID не существует");
+            }
         }
         studentsRepository.save(Mapper.studentDTOToStudentDAO(rqStudentDTO));
     }

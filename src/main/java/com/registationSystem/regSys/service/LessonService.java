@@ -1,12 +1,15 @@
 package com.registationSystem.regSys.service;
 
 import com.registationSystem.regSys.dao.LessonDAO;
+import com.registationSystem.regSys.dto.rq.RqLessonDTO;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Date;
 import java.util.List;
 
 public interface LessonService {
-    void create(LessonDAO lessonDAO);
+    ResponseEntity<?> create(RqLessonDTO rqLessonDTO);
+
 
     List<LessonDAO> readAll();
 

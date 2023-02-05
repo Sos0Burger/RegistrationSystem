@@ -18,7 +18,7 @@ import java.util.List;
 public interface StudentApi {
     @Operation(summary = "Создание студента")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Успешно создан"),
+            @ApiResponse(responseCode = "201", description = "Успешно создан"),
             @ApiResponse(responseCode = "404", description = "Группа не найдена")
     })
     @PostMapping

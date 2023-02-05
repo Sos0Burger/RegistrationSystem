@@ -36,9 +36,9 @@ public class Mapper {
                 rqStudentDTO.getFirstName(),
                 rqStudentDTO.getSurname(),
                 rqStudentDTO.getAge(),
-                rqStudentDTO.getGroupId()==null?
-                null:
-                groupService.read(rqStudentDTO.getGroupId()),
+                rqStudentDTO.getGroupId() == null ?
+                        null :
+                        groupService.read(rqStudentDTO.getGroupId()),
                 null
         );
     }
@@ -77,11 +77,12 @@ public class Mapper {
                 rqLessonDTO.getDate(),
                 false,
 
-                lessonService.read(rqLessonDTO.getGroupId()) == null ?
+                groupService.read(rqLessonDTO.getGroupId()) == null ?
                         null :
-                        lessonService.read(rqLessonDTO.getGroupId()).getGroupDAO(),
-
-                coachService.read(rqLessonDTO.getCoachId()),
+                        groupService.read(rqLessonDTO.getGroupId()),
+                coachService.read(rqLessonDTO.getCoachId()) == null ?
+                        null :
+                        coachService.read(rqLessonDTO.getCoachId()),
                 null
         );
     }
