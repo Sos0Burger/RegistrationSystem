@@ -46,7 +46,6 @@ public interface StudentApi {
             @ApiResponse(responseCode = "200", description = "Данные успешно получены"),
             @ApiResponse(responseCode = "404", description = "Студент не найден")
     })
-    //TODO Написать что происходит
     @GetMapping("/{id}")
     ResponseEntity<RsStudentDTO> findById(@PathVariable(name = "id")int id);
 
