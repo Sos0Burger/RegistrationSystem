@@ -5,8 +5,6 @@ import com.registationSystem.regSys.dto.rs.RsLessonDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
 import com.registationSystem.regSys.exception.ControllerException;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +46,7 @@ public interface StudentApi {
             @ApiResponse(responseCode = "200", description = "Данные успешно получены"),
             @ApiResponse(responseCode = "404", description = "Студент не найден")
     })
+    //TODO Написать что происходит
     @GetMapping("/{id}")
     ResponseEntity<RsStudentDTO> findById(@PathVariable(name = "id")int id);
 

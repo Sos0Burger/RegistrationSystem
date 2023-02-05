@@ -36,12 +36,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public List<RsStudentDTO> readAll() {
-        List<RsStudentDTO> rsStudentDTOS = new ArrayList<>();
+        List<RsStudentDTO> rsStudentDTOs = new ArrayList<>();
         for (StudentDAO studentDAO : studentsRepository.findAll()
         ) {
-            rsStudentDTOS.add(Mapper.studentDAOToStudentDTO(studentDAO));
+            rsStudentDTOs.add(Mapper.studentDAOToStudentDTO(studentDAO));
         }
-        return rsStudentDTOS;
+        return rsStudentDTOs;
     }
 
     public StudentDAO read(int id) {
