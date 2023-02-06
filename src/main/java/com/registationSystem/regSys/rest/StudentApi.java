@@ -3,7 +3,9 @@ package com.registationSystem.regSys.rest;
 import com.registationSystem.regSys.dto.rq.RqStudentDTO;
 import com.registationSystem.regSys.dto.rs.RsLessonDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
-import com.registationSystem.regSys.exception.ControllerException;
+import com.registationSystem.regSys.exception.CreationException;
+import com.registationSystem.regSys.exception.FindException;
+import com.registationSystem.regSys.exception.UpdateException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -20,7 +22,7 @@ public interface StudentApi {
             @ApiResponse(responseCode = "404", description = "Группа не найдена")
     })
     @PostMapping
-    ResponseEntity<?> create(@RequestBody RqStudentDTO rqStudentDTO) throws ControllerException;
+    ResponseEntity<?> create(@RequestBody RqStudentDTO rqStudentDTO) throws CreationException;
 
     @Operation(summary = "Обновление данных студента")
     @ApiResponses(value = {
@@ -29,7 +31,7 @@ public interface StudentApi {
             @ApiResponse(responseCode = "404", description = "Студент не найден")
     })
     @PutMapping
-    ResponseEntity<?> update(@RequestBody RqStudentDTO rqStudentDTO, @PathVariable(name = "id")int id) throws ControllerException;
+    ResponseEntity<?> update(@RequestBody RqStudentDTO rqStudentDTO, @PathVariable(name = "id")int id) throws UpdateException;
     @Operation(summary = "Получение данных всех студентов")
     @ApiResponse(responseCode = "200", description = "Данные успешно получены")
     @GetMapping
@@ -40,13 +42,13 @@ public interface StudentApi {
             @ApiResponse(responseCode = "404", description = "Студент не найден")
     })
     @GetMapping("/{id}/schedule")
-    ResponseEntity<List<RsLessonDTO>> getSchedule(@PathVariable(name = "id")int id);
+    ResponseEntity<List<RsLessonDTO>> getSchedule(@PathVariable(name = "id")int id) throws FindException;
     @Operation(summary = "Получение данных по ID студента")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Данные успешно получены"),
             @ApiResponse(responseCode = "404", description = "Студент не найден")
     })
     @GetMapping("/{id}")
-    ResponseEntity<RsStudentDTO> findById(@PathVariable(name = "id")int id);
+    ResponseEntity<RsStudentDTO> findById(@PathVariable(name = "id")int id) throws FindException;
 
 }

@@ -3,7 +3,9 @@ package com.registationSystem.regSys.rest.impl;
 import com.registationSystem.regSys.dto.rq.RqStudentDTO;
 import com.registationSystem.regSys.dto.rs.RsLessonDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
-import com.registationSystem.regSys.exception.ControllerException;
+import com.registationSystem.regSys.exception.CreationException;
+import com.registationSystem.regSys.exception.FindException;
+import com.registationSystem.regSys.exception.UpdateException;
 import com.registationSystem.regSys.mapper.Mapper;
 import com.registationSystem.regSys.rest.StudentApi;
 import com.registationSystem.regSys.service.StudentService;
@@ -31,22 +33,22 @@ public class StudentController implements StudentApi {
     }
 
     @Override
-    public ResponseEntity<Void> create(RqStudentDTO rqStudentDTO) throws ControllerException {
+    public ResponseEntity<Void> create(RqStudentDTO rqStudentDTO) throws CreationException {
         try {
             studentService.create(rqStudentDTO);
         } catch (NoSuchElementException ex) {
-            throw new ControllerException(ex.getMessage());
+            throw new CreationException("ID не существует");
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 
     @Override
-    public ResponseEntity<?> update(RqStudentDTO rqStudentDTO, int id) throws ControllerException {
+    public ResponseEntity<?> update(RqStudentDTO rqStudentDTO, int id) throws UpdateException {
         try {
             studentService.update(rqStudentDTO, id);
         } catch (NoSuchElementException ex) {
-            throw new ControllerException(ex.getMessage());
+            throw new UpdateException("ID не существует");
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -57,13 +59,22 @@ public class StudentController implements StudentApi {
     }
 
     @Override
-    public ResponseEntity<RsStudentDTO> findById(@PathVariable(name = "id") int id) {
-        return new ResponseEntity<>(Mapper.studentDAOToStudentDTO(studentService.read(id)), HttpStatus.OK);
+    public ResponseEntity<RsStudentDTO> findById(@PathVariable(name = "id") int id) throws FindException {
+        try {
+            return new ResponseEntity<>(Mapper.studentDAOToStudentDTO(studentService.read(id)), HttpStatus.OK);
+        }
+        catch (NoSuchElementException ex){
+            throw new FindException("ID не существует");
+        }
     }
 
     @Override
-    public ResponseEntity<List<RsLessonDTO>> getSchedule(@PathVariable(name = "id") int id) {
-
-        return new ResponseEntity<>(studentService.getScheduleById(id), HttpStatus.OK);
+    public ResponseEntity<List<RsLessonDTO>> getSchedule(@PathVariable(name = "id") int id) throws FindException {
+        try{
+            return new ResponseEntity<>(studentService.getScheduleById(id), HttpStatus.OK);
+        }
+        catch (NoSuchElementException ex){
+            throw new FindException("Студент с таким ID не существует");
+        }
     }
 }

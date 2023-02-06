@@ -25,12 +25,8 @@ public class StudentServiceImpl implements StudentService {
     private GroupsRepository groupsRepository;
 
     public void create(RqStudentDTO rqStudentDTO) throws NoSuchElementException {
-        if(rqStudentDTO.getGroupId()!=null) {
-            try {
-                groupsRepository.findById(rqStudentDTO.getGroupId()).get();
-            } catch (NoSuchElementException ex) {
-                throw new NoSuchElementException("Группы с таким ID не существует");
-            }
+        if (rqStudentDTO.getGroupId() != null) {
+            groupsRepository.findById(rqStudentDTO.getGroupId()).get();
         }
         studentsRepository.save(Mapper.studentDTOToStudentDAO(rqStudentDTO));
     }
@@ -45,25 +41,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public StudentDAO read(int id) {
-        return studentsRepository.existsById(id)?studentsRepository.findById(id).get():null;
+        return studentsRepository.findById(id).get();
     }
 
-    public void update(RqStudentDTO rqStudentDTO, int id) throws NoSuchElementException {
+    public void update(RqStudentDTO rqStudentDTO, int id) {
         StudentDAO studentDAO;
-        try {
-            studentDAO = read(id);
-
-        }
-        catch (NoSuchElementException ex){
-            throw new NoSuchElementException("Студента с таким ID не существует");
-        }
-        try {
-            studentDAO.setGroupDAO(groupsRepository.findById(id).get());
-        }
-        catch (NoSuchElementException ex){
-            throw new NoSuchElementException("Группы с таким ID не существует");
-        }
-
+        studentDAO = read(id);
+        studentDAO.setGroupDAO(groupsRepository.findById(id).get());
         studentDAO.setAge(rqStudentDTO.getAge());
         studentDAO.setName(rqStudentDTO.getFirstName());
         studentDAO.setSurname(rqStudentDTO.getSurname());
@@ -75,7 +59,7 @@ public class StudentServiceImpl implements StudentService {
         studentDAO.setGroupDAO(null);
     }
 
-    public List<RsLessonDTO> getScheduleById(int id){
+    public List<RsLessonDTO> getScheduleById(int id) {
         List<RsLessonDTO> rsLessonDTOS = new ArrayList<>();
         Set<LessonDAO> lessonDAOList = groupsRepository.findById(studentsRepository.findById(id).get().getGroupDAO().getId()).get().getLessonsList();
         lessonDAOList.removeIf(LessonDAO::getIsDone);

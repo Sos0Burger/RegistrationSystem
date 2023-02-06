@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public interface StudentService {
-    void create(RqStudentDTO rqStudentDTO) throws NoSuchElementException;
+    void create(RqStudentDTO rqStudentDTO);
 
     List<RsStudentDTO> readAll();
 
