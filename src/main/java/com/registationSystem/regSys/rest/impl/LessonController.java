@@ -3,6 +3,7 @@ package com.registationSystem.regSys.rest.impl;
 
 import com.registationSystem.regSys.dao.LessonDAO;
 import com.registationSystem.regSys.dto.rq.RqLessonDTO;
+import com.registationSystem.regSys.exception.CreationException;
 import com.registationSystem.regSys.mapper.Mapper;
 import com.registationSystem.regSys.service.impl.CoachServiceImpl;
 import com.registationSystem.regSys.service.impl.GroupServiceImpl;
@@ -22,6 +23,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @Getter
@@ -38,8 +40,19 @@ public class LessonController implements LessonApi {
     }
 
     @Override
-    public ResponseEntity<?> create(@RequestBody RqLessonDTO rqLessonDTO) {
-        return lessonService.create(rqLessonDTO);
+    public ResponseEntity<?> create(@RequestBody RqLessonDTO rqLessonDTO) throws CreationException {
+        if(rqLessonDTO.getCoachId()==null){
+            throw new CreationException("ID тренера не должен быть NULL");
+        }
+        if(rqLessonDTO.getGroupId()==null){
+            throw new CreationException("ID группы не должен быть NULL");
+        }
+        try {
+            return lessonService.create(rqLessonDTO);
+        }
+        catch (NoSuchElementException ex){
+            throw new CreationException("ID не существует");
+        }
     }
 
 }

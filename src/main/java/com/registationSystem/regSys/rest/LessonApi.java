@@ -1,6 +1,7 @@
 package com.registationSystem.regSys.rest;
 
 import com.registationSystem.regSys.dto.rq.RqLessonDTO;
+import com.registationSystem.regSys.exception.CreationException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -20,5 +21,5 @@ public interface LessonApi {
             @ApiResponse(responseCode = "409", description = "Время не подходит")
     })
     @PostMapping
-    ResponseEntity<?> create(@RequestBody RqLessonDTO rqLessonDTO);
+    ResponseEntity<?> create(@RequestBody RqLessonDTO rqLessonDTO) throws CreationException;
 }

@@ -4,6 +4,7 @@ import com.registationSystem.regSys.config.ApplicationSettings;
 import com.registationSystem.regSys.dao.LessonDAO;
 import com.registationSystem.regSys.dto.rq.RqLessonDTO;
 import com.registationSystem.regSys.mapper.Mapper;
+import com.registationSystem.regSys.repository.CoachesRepository;
 import com.registationSystem.regSys.repository.GroupsRepository;
 import com.registationSystem.regSys.repository.LessonsRepository;
 import com.registationSystem.regSys.service.LessonService;
@@ -21,19 +22,14 @@ public class LessonServiceImpl implements LessonService {
     private LessonsRepository lessonsRepository;
     @Autowired
     private GroupsRepository groupsRepository;
+    @Autowired
+    private CoachesRepository coachesRepository;
 
     public ResponseEntity<?> create(RqLessonDTO rqLessonDTO) {
+        groupsRepository.findById(rqLessonDTO.getGroupId()).get();
+        coachesRepository.findById(rqLessonDTO.getCoachId()).get();
+
         LessonDAO lessonDAO = Mapper.lessonDTOToLessonDAO(rqLessonDTO);
-        //Поиск группы по ID
-        if (lessonDAO.getGroupDAO() == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        //Поиск тренера по ID
-        if (lessonDAO.getCoachDAO() == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
         List<LessonDAO> dateLessonsList = lessonsRepository.findByDate(lessonDAO.getDate());
         ArrayList<Time> times = new ArrayList<>();
         times.add(ApplicationSettings.LESSON_START_TIME);

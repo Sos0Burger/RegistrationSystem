@@ -76,13 +76,8 @@ public class Mapper {
                 rqLessonDTO.getTime(),
                 rqLessonDTO.getDate(),
                 false,
-
-                groupService.read(rqLessonDTO.getGroupId()) == null ?
-                        null :
-                        groupService.read(rqLessonDTO.getGroupId()),
-                coachService.read(rqLessonDTO.getCoachId()) == null ?
-                        null :
-                        coachService.read(rqLessonDTO.getCoachId()),
+                groupService.read(rqLessonDTO.getGroupId()),
+                coachService.read(rqLessonDTO.getCoachId()),
                 null
         );
     }
