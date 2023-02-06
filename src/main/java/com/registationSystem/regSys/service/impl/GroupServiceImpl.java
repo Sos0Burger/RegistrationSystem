@@ -39,7 +39,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     public GroupDAO read(int id) {
-        return groupsRepository.existsById(id) ? groupsRepository.findById(id).get() : null;
+        return groupsRepository.findById(id).get();
     }
 
     public ResponseEntity<?> update(RqGroupDTO rqGroupDTO, int id) {
@@ -90,8 +90,10 @@ public class GroupServiceImpl implements GroupService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     public void delete(int id) {
-        if (groupsRepository.existsById(id)) {
-            groupsRepository.deleteById(id);
+        GroupDAO groupDAO = groupsRepository.findById(id).get();
+        for (StudentDAO studentDAO : groupDAO.getStudentsList()) {
+            studentDAO.setGroupDAO(null);
+            studentsRepository.save(studentDAO);
         }
     }
 

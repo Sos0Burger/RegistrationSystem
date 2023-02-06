@@ -3,6 +3,8 @@ package com.registationSystem.regSys.rest;
 import com.registationSystem.regSys.dto.rq.RqGroupDTO;
 import com.registationSystem.regSys.dto.rs.RsGroupDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
+import com.registationSystem.regSys.exception.FindException;
+import com.registationSystem.regSys.exception.UpdateException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -25,7 +27,7 @@ public interface GroupApi {
             @ApiResponse(responseCode = "409", description = "Размер группы не подходит")
     })
     @PutMapping("/{id}")
-    ResponseEntity<?> update(@RequestBody RqGroupDTO rqGroupDTO, @PathVariable(name = "id") int id);
+    ResponseEntity<?> update(@RequestBody RqGroupDTO rqGroupDTO, @PathVariable(name = "id") int id) throws UpdateException;
 
     @Operation(summary = "Получение данных всех групп")
     @ApiResponse(responseCode = "200", description = "Данные успешно получены")
@@ -38,7 +40,7 @@ public interface GroupApi {
             @ApiResponse(responseCode = "404", description = "Группа не найдена")
     })
     @GetMapping("/{id}")
-    ResponseEntity<RsGroupDTO> findById(@PathVariable(name = "id") int id);
+    ResponseEntity<RsGroupDTO> findById(@PathVariable(name = "id") int id) throws FindException;
 
     @Operation(summary = "Запись студента в группу")
     @ApiResponses(value = {
@@ -47,15 +49,15 @@ public interface GroupApi {
             @ApiResponse(responseCode = "404", description = "Группа не найдена")
     })
     @PostMapping("/{id}/{studentId}")
-    ResponseEntity<?> register(@PathVariable(name = "id") int groupId, @PathVariable(name = "studentId") int studentId);
+    ResponseEntity<?> register(@PathVariable(name = "id") int groupId, @PathVariable(name = "studentId") int studentId) throws FindException;
 
-    @Operation(summary = "Удаление группы по ID")
+    @Operation(summary = "Удаление всех студентов из группы по ID группы")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Группа успешно удалена"),
+            @ApiResponse(responseCode = "200", description = "Студенты успешно удалены"),
             @ApiResponse(responseCode = "404", description = "Группа не найдена")
     })
     @DeleteMapping("/{id}")
-    ResponseEntity<?> delete(@PathVariable(name = "id") int id);
+    ResponseEntity<?> delete(@PathVariable(name = "id") int id) throws FindException;
 
     @Operation(summary = "Получение списка студентов группы")
     @ApiResponses(value = {
@@ -63,5 +65,5 @@ public interface GroupApi {
             @ApiResponse(responseCode = "404", description = "Группа не найдена")
     })
     @GetMapping("/{id}/students")
-    ResponseEntity<List<RsStudentDTO>> getStudents(@PathVariable(name = "id") int groupId);
+    ResponseEntity<List<RsStudentDTO>> getStudents(@PathVariable(name = "id") int groupId) throws FindException;
 }
