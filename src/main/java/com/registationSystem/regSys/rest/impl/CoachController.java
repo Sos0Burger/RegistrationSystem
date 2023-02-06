@@ -19,54 +19,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@RequestMapping("/coaches")
 @RestController
 @Getter
 public class CoachController implements CoachApi {
     private final CoachServiceImpl coachService;
-    private final LessonServiceImpl lessonService;
 
     @Autowired
-    public CoachController(CoachServiceImpl coachService, LessonServiceImpl lessonService) {
+    public CoachController(CoachServiceImpl coachService) {
         this.coachService = coachService;
-        this.lessonService = lessonService;
     }
-
     @Override
     public ResponseEntity<?> create(@RequestBody RqCoachDTO rqCoachDTO) {
-        coachService.create(Mapper.coachDTOToCoachDAO(rqCoachDTO));
+        coachService.create(rqCoachDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @Override
     public ResponseEntity<List<RsCoachDTO>> readAll(){
-        List<RsCoachDTO> rsCoachDTOS = new ArrayList<>();
-        for (CoachDAO coachDAO : coachService.readAll()
-                ) {
-            rsCoachDTOS.add(Mapper.coachDAOToCoachDTO(coachDAO));
-        }
-        return new ResponseEntity<>(rsCoachDTOS, HttpStatus.OK);
+        return new ResponseEntity<>(coachService.readAll(), HttpStatus.OK);
     }
 
     @Override
-    public  ResponseEntity<List<RsLessonDTO>> getUnfinishedLessons(@RequestParam(name="id")int id){
-        List<RsLessonDTO> rsLessonDTOS = new ArrayList<>();
-        Set<LessonDAO> lessonDAOSet = coachService.read(id).getLessonDAOList();
-        lessonDAOSet.removeIf(LessonDAO::getIsDone);
-        for (LessonDAO lessonDAO : lessonDAOSet
-             ) {
-            rsLessonDTOS.add(Mapper.lessonDAOToLessonDTO(lessonDAO));
-        }
-        return new ResponseEntity<>(rsLessonDTOS, HttpStatus.OK);
+    public  ResponseEntity<List<RsLessonDTO>> getUnfinishedLessons(@RequestParam(name="id")int coachId){
+        return new ResponseEntity<>(coachService.getUnfinishedLessons(coachId), HttpStatus.OK);
     }
     @Override
-    public ResponseEntity<List<RsLessonDTO>> getFinishedLessons(@RequestParam(name="id")int id){
-        List<RsLessonDTO> rsLessonDTOS = new ArrayList<>();
-        Set<LessonDAO> lessonDAOSet = coachService.read(id).getLessonDAOList();
-        lessonDAOSet.removeIf(lesson -> !lesson.getIsDone());
-        for (LessonDAO lessonDAO : lessonDAOSet
-        ) {
-            rsLessonDTOS.add(Mapper.lessonDAOToLessonDTO(lessonDAO));
-        }
-        return new ResponseEntity<>(rsLessonDTOS, HttpStatus.OK);
+    public ResponseEntity<List<RsLessonDTO>> getFinishedLessons(@RequestParam(name="id")int coachId){
+        return new ResponseEntity<>(coachService.getFinishedLessons(coachId), HttpStatus.OK);
     }
 }
