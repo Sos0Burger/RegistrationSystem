@@ -41,12 +41,6 @@ public class LessonController implements LessonApi {
 
     @Override
     public ResponseEntity<?> create(@RequestBody RqLessonDTO rqLessonDTO) throws CreationException {
-        if(rqLessonDTO.getCoachId()==null){
-            throw new CreationException("ID тренера не должен быть NULL");
-        }
-        if(rqLessonDTO.getGroupId()==null){
-            throw new CreationException("ID группы не должен быть NULL");
-        }
         try {
             return lessonService.create(rqLessonDTO);
         }

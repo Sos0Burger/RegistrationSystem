@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface StudentApi {
             @ApiResponse(responseCode = "404", description = "Группа не найдена")
     })
     @PostMapping
-    ResponseEntity<?> create(@RequestBody RqStudentDTO rqStudentDTO) throws CreationException;
+    ResponseEntity<?> create(@Validated @RequestBody RqStudentDTO rqStudentDTO) throws CreationException;
 
     @Operation(summary = "Обновление данных студента")
     @ApiResponses(value = {
@@ -31,7 +32,7 @@ public interface StudentApi {
             @ApiResponse(responseCode = "404", description = "Студент не найден")
     })
     @PutMapping
-    ResponseEntity<?> update(@RequestBody RqStudentDTO rqStudentDTO, @PathVariable(name = "id")int id) throws UpdateException;
+    ResponseEntity<?> update(@Validated @RequestBody RqStudentDTO rqStudentDTO, @PathVariable(name = "id")int id) throws UpdateException;
     @Operation(summary = "Получение данных всех студентов")
     @ApiResponse(responseCode = "200", description = "Данные успешно получены")
     @GetMapping

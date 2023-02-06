@@ -26,12 +26,6 @@ public class StudentAttendanceController implements StudentAttendanceApi {
 
     @Override
     public ResponseEntity<?> create(RqStudentAttendanceDTO rqStudentAttendanceDTO) throws CreationException {
-        if (rqStudentAttendanceDTO.getStudentId() == null) {
-            throw new CreationException("ID студента не должно быть NULL");
-        }
-        if (rqStudentAttendanceDTO.getLessonId() == null) {
-            throw new CreationException("ID урока не должно быть NULL");
-        }
         try {
             studentAttendanceService.create(rqStudentAttendanceDTO);
         } catch (NoSuchElementException ex) {
@@ -42,12 +36,6 @@ public class StudentAttendanceController implements StudentAttendanceApi {
 
     @Override
     public ResponseEntity<?> update(RqStudentAttendanceDTO rqStudentAttendanceDTO, int id) throws UpdateException {
-        if (rqStudentAttendanceDTO.getStudentId() == null) {
-            throw new UpdateException("ID студента не должно быть NULL");
-        }
-        if (rqStudentAttendanceDTO.getLessonId() == null) {
-            throw new UpdateException("ID урока не должно быть NULL");
-        }
         try {
             studentAttendanceService.update(rqStudentAttendanceDTO, id);
         } catch (NoSuchElementException ex) {

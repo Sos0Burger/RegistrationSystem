@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface GroupApi {
     @Operation(summary = "Создание группы")
     @ApiResponse(responseCode = "201", description = "Успешно создана")
     @PostMapping()
-    ResponseEntity<?> create(@RequestBody RqGroupDTO rqGroupDTO);
+    ResponseEntity<?> create(@Validated @RequestBody RqGroupDTO rqGroupDTO);
 
     @Operation(summary = "Обновление данных студента")
     @ApiResponses(value = {
@@ -27,7 +28,7 @@ public interface GroupApi {
             @ApiResponse(responseCode = "409", description = "Размер группы не подходит")
     })
     @PutMapping("/{id}")
-    ResponseEntity<?> update(@RequestBody RqGroupDTO rqGroupDTO, @PathVariable(name = "id") int id) throws UpdateException;
+    ResponseEntity<?> update(@Validated @RequestBody RqGroupDTO rqGroupDTO, @PathVariable(name = "id") int id) throws UpdateException;
 
     @Operation(summary = "Получение данных всех групп")
     @ApiResponse(responseCode = "200", description = "Данные успешно получены")

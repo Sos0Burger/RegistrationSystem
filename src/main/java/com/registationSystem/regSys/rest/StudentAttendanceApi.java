@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -19,7 +20,7 @@ public interface StudentAttendanceApi {
             @ApiResponse(responseCode = "404", description = "Занятие не найдено")
     })
     @PostMapping
-    ResponseEntity<?> create(@RequestBody RqStudentAttendanceDTO rqStudentAttendanceDTO) throws CreationException;
+    ResponseEntity<?> create(@Validated @RequestBody RqStudentAttendanceDTO rqStudentAttendanceDTO) throws CreationException;
 
     @Operation(summary = "Обновление данных посещаемости по ID")
     @ApiResponses(value = {
@@ -28,5 +29,5 @@ public interface StudentAttendanceApi {
 
     })
     @PutMapping("/{id}")
-    ResponseEntity<?> update(@RequestBody RqStudentAttendanceDTO rqStudentAttendanceDTO, @PathVariable int id) throws UpdateException;
+    ResponseEntity<?> update(@Validated @RequestBody RqStudentAttendanceDTO rqStudentAttendanceDTO, @PathVariable int id) throws UpdateException;
 }

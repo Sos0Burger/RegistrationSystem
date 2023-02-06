@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,5 +22,5 @@ public interface LessonApi {
             @ApiResponse(responseCode = "409", description = "Время не подходит")
     })
     @PostMapping
-    ResponseEntity<?> create(@RequestBody RqLessonDTO rqLessonDTO) throws CreationException;
+    ResponseEntity<?> create(@Validated @RequestBody RqLessonDTO rqLessonDTO) throws CreationException;
 }

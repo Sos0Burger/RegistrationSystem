@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface CoachApi {
     @Operation(summary = "Создание тренера")
     @ApiResponse(responseCode = "201", description = "Успешно создано")
     @PostMapping
-    ResponseEntity<?> create(@RequestBody RqCoachDTO rqCoachDTO);
+    ResponseEntity<?> create(@Validated @RequestBody RqCoachDTO rqCoachDTO);
 
     @Operation(summary = "Получение данных всех тренеров")
     @ApiResponse(responseCode = "201", description = "Данные успешно получены")
