@@ -1,7 +1,8 @@
 package com.registationSystem.regSys.rest;
 
 import com.registationSystem.regSys.dto.rq.RqStudentAttendanceDTO;
-import com.registationSystem.regSys.dto.rs.RsStudentAttendanceDTO;
+import com.registationSystem.regSys.exception.CreationException;
+import com.registationSystem.regSys.exception.UpdateException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -18,7 +19,7 @@ public interface StudentAttendanceApi {
             @ApiResponse(responseCode = "404", description = "Занятие не найдено")
     })
     @PostMapping
-    ResponseEntity<?> create(@RequestBody RqStudentAttendanceDTO rqStudentAttendanceDTO);
+    ResponseEntity<?> create(@RequestBody RqStudentAttendanceDTO rqStudentAttendanceDTO) throws CreationException;
 
     @Operation(summary = "Обновление данных посещаемости по ID")
     @ApiResponses(value = {
@@ -27,5 +28,5 @@ public interface StudentAttendanceApi {
 
     })
     @PutMapping("/{id}")
-    ResponseEntity<?> update(@RequestBody RqStudentAttendanceDTO rqStudentAttendanceDTO, @PathVariable int id);
+    ResponseEntity<?> update(@RequestBody RqStudentAttendanceDTO rqStudentAttendanceDTO, @PathVariable int id) throws UpdateException;
 }
