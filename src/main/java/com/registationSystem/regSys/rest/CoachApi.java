@@ -3,6 +3,7 @@ package com.registationSystem.regSys.rest;
 import com.registationSystem.regSys.dto.rq.RqCoachDTO;
 import com.registationSystem.regSys.dto.rs.RsCoachDTO;
 import com.registationSystem.regSys.dto.rs.RsLessonDTO;
+import com.registationSystem.regSys.exception.FindException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -28,10 +29,10 @@ public interface CoachApi {
     @Operation(summary = "Получение незакончченных занятий")
     @ApiResponse(responseCode = "201", description = "Данные успешно получены")
     @GetMapping("/{id}/unfinishedLessons")
-    ResponseEntity<List<RsLessonDTO>> getUnfinishedLessons(@RequestParam(name = "id") int coachId);
+    ResponseEntity<List<RsLessonDTO>> getUnfinishedLessons(@RequestParam(name = "id") int coachId) throws FindException;
 
     @Operation(summary = "Получение закончченных занятий")
     @ApiResponse(responseCode = "201", description = "Данные успешно получены")
     @GetMapping("/{id}/finishedLessons")
-    ResponseEntity<List<RsLessonDTO>> getFinishedLessons(@RequestParam(name = "id") int coachId);
+    ResponseEntity<List<RsLessonDTO>> getFinishedLessons(@RequestParam(name = "id") int coachId) throws FindException;
 }
