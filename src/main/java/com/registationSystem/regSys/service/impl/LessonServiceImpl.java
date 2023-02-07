@@ -72,7 +72,7 @@ public class LessonServiceImpl implements LessonService {
 
         LessonDAO lessonDAO = Mapper.lessonDTOToLessonDAO(rqLessonDTO);
         List<LessonDAO> dateLessonsList = lessonsRepository.findByDate(lessonDAO.getDate());
-        dateLessonsList.remove(lessonDAO);
+
 
         ArrayList<Time> times = new ArrayList<>();
         times.add(ApplicationSettings.LESSON_START_TIME);
@@ -81,7 +81,9 @@ public class LessonServiceImpl implements LessonService {
         //Проверка возможности записи на это время
         for (LessonDAO item : dateLessonsList
         ) {
-            times.add(item.getTime());
+            if(!(item.getTime().equals(lessonDAO.getTime()))) {
+                times.add(item.getTime());
+            }
         }
         Collections.sort(times);
         for (int i = 0; i < times.size() - 1; i++) {
@@ -90,10 +92,9 @@ public class LessonServiceImpl implements LessonService {
                 lessonDAO.setId(lessonDAO.getId());
                 lessonDAO.setId(id);
                 lessonsRepository.save(lessonDAO);
-                return new ResponseEntity<>(HttpStatus.CREATED);
+                return new ResponseEntity<>(HttpStatus.OK);
             }
         }
-        //Это надо поменять, наверное
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
