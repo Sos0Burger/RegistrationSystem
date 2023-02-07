@@ -9,7 +9,6 @@ import com.registationSystem.regSys.exception.UpdateException;
 import com.registationSystem.regSys.mapper.Mapper;
 import com.registationSystem.regSys.rest.GroupApi;
 import com.registationSystem.regSys.service.GroupService;
-import com.registationSystem.regSys.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +22,7 @@ import java.util.NoSuchElementException;
 @RestController
 public class GroupController implements GroupApi {
     private final GroupService groupService;
+
     @Autowired
     public GroupController(GroupService groupService) {
         this.groupService = groupService;

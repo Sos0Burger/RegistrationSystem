@@ -4,8 +4,6 @@ import com.registationSystem.regSys.dao.CoachDAO;
 import com.registationSystem.regSys.dto.rq.RqCoachDTO;
 import com.registationSystem.regSys.dto.rs.RsCoachDTO;
 import com.registationSystem.regSys.dto.rs.RsLessonDTO;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 

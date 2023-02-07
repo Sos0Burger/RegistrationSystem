@@ -25,7 +25,7 @@ public class StudentAttendanceServiceImpl implements StudentAttendanceService {
         studentsRepository.findById(rqStudentAttendanceDTO.getStudentId()).get();
         lessonsRepository.findById(rqStudentAttendanceDTO.getLessonId()).get();
         try {
-            if(rqStudentAttendanceDTO.getId()!=null) {
+            if (rqStudentAttendanceDTO.getId() != null) {
                 studentAttendanceRepository.findById(rqStudentAttendanceDTO.getId()).get();
             }
             update(rqStudentAttendanceDTO, rqStudentAttendanceDTO.getId());

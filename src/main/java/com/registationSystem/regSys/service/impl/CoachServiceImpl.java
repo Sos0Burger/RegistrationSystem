@@ -9,7 +9,6 @@ import com.registationSystem.regSys.mapper.Mapper;
 import com.registationSystem.regSys.repository.CoachesRepository;
 import com.registationSystem.regSys.service.CoachService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

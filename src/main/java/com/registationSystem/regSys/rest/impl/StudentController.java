@@ -62,18 +62,16 @@ public class StudentController implements StudentApi {
     public ResponseEntity<RsStudentDTO> findById(@PathVariable(name = "id") int id) throws FindException {
         try {
             return new ResponseEntity<>(Mapper.studentDAOToStudentDTO(studentService.read(id)), HttpStatus.OK);
-        }
-        catch (NoSuchElementException ex){
+        } catch (NoSuchElementException ex) {
             throw new FindException("ID не существует");
         }
     }
 
     @Override
     public ResponseEntity<List<RsLessonDTO>> getSchedule(@PathVariable(name = "id") int id) throws FindException {
-        try{
+        try {
             return new ResponseEntity<>(studentService.getScheduleById(id), HttpStatus.OK);
-        }
-        catch (NoSuchElementException ex){
+        } catch (NoSuchElementException ex) {
             throw new FindException("Студент с таким ID не существует");
         }
     }

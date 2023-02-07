@@ -3,7 +3,6 @@ package com.registationSystem.regSys.mapper;
 
 import com.registationSystem.regSys.dao.*;
 import com.registationSystem.regSys.dto.rq.*;
-import com.registationSystem.regSys.rest.impl.*;
 import com.registationSystem.regSys.dto.rs.*;
 import com.registationSystem.regSys.service.*;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,7 +6,6 @@ import com.registationSystem.regSys.dto.rs.RsLessonDTO;
 import com.registationSystem.regSys.exception.FindException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

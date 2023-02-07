@@ -3,7 +3,6 @@ package com.registationSystem.regSys.service.impl;
 import com.registationSystem.regSys.dao.GroupDAO;
 import com.registationSystem.regSys.dao.StudentDAO;
 import com.registationSystem.regSys.dto.rq.RqGroupDTO;
-import com.registationSystem.regSys.dto.rq.RqStudentDTO;
 import com.registationSystem.regSys.dto.rs.RsGroupDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
 import com.registationSystem.regSys.mapper.Mapper;
@@ -74,14 +73,14 @@ public class GroupServiceImpl implements GroupService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public ResponseEntity<?> registration(int groupId, int studentId){
+    public ResponseEntity<?> registration(int groupId, int studentId) {
 
         GroupDAO groupDAO = groupsRepository.findById(groupId).get();
         StudentDAO studentDAO = studentsRepository.findById(studentId).get();
 
-        if(!(groupDAO.getStudentsList().size()+1<= groupDAO.getSize())){
-            if(!(studentDAO.getAge()>= groupDAO.getMinAge() && studentDAO.getAge()<= groupDAO.getMaxAge())){
-                return new ResponseEntity<>("Age is not suitable",HttpStatus.NOT_ACCEPTABLE);
+        if (!(groupDAO.getStudentsList().size() + 1 <= groupDAO.getSize())) {
+            if (!(studentDAO.getAge() >= groupDAO.getMinAge() && studentDAO.getAge() <= groupDAO.getMaxAge())) {
+                return new ResponseEntity<>("Age is not suitable", HttpStatus.NOT_ACCEPTABLE);
             }
             return new ResponseEntity<>("Group is full", HttpStatus.NOT_ACCEPTABLE);
         }
@@ -89,6 +88,7 @@ public class GroupServiceImpl implements GroupService {
         studentsRepository.save(studentDAO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     public void delete(int id) {
         GroupDAO groupDAO = groupsRepository.findById(id).get();
         for (StudentDAO studentDAO : groupDAO.getStudentsList()) {
@@ -100,8 +100,8 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<RsStudentDTO> getStudents(int groupId) {
         List<RsStudentDTO> rsGroupDTOs = new ArrayList<>();
-        for (StudentDAO student:groupsRepository.findById(groupId).get().getStudentsList()
-             ) {
+        for (StudentDAO student : groupsRepository.findById(groupId).get().getStudentsList()
+        ) {
             rsGroupDTOs.add(Mapper.studentDAOToStudentDTO(student));
         }
         return rsGroupDTOs;

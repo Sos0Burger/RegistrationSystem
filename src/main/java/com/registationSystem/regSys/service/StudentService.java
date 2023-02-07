@@ -6,7 +6,6 @@ import com.registationSystem.regSys.dto.rs.RsLessonDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public interface StudentService {
     void create(RqStudentDTO rqStudentDTO);

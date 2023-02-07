@@ -10,14 +10,16 @@ import java.util.List;
 
 public interface GroupService {
     void create(RqGroupDTO rqGroupDTO);
+
     List<RsGroupDTO> readAll();
 
     GroupDAO read(int id);
 
     ResponseEntity<?> update(RqGroupDTO rqGroupDTO, int id);
 
-   void delete(int id);
-   ResponseEntity<?> registration(int groupId, int studentId);
+    void delete(int id);
 
-   List<RsStudentDTO> getStudents(int groupId);
+    ResponseEntity<?> registration(int groupId, int studentId);
+
+    List<RsStudentDTO> getStudents(int groupId);
 }
