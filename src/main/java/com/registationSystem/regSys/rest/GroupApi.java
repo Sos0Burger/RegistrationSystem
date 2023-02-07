@@ -3,6 +3,7 @@ package com.registationSystem.regSys.rest;
 import com.registationSystem.regSys.dto.rq.RqGroupDTO;
 import com.registationSystem.regSys.dto.rs.RsGroupDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
+import com.registationSystem.regSys.exception.DeleteException;
 import com.registationSystem.regSys.exception.FindException;
 import com.registationSystem.regSys.exception.UpdateException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -58,7 +59,7 @@ public interface GroupApi {
             @ApiResponse(responseCode = "404", description = "Группа не найдена")
     })
     @DeleteMapping("/{id}")
-    ResponseEntity<?> delete(@PathVariable(name = "id") int id) throws FindException;
+    ResponseEntity<?> delete(@PathVariable(name = "id") int id) throws DeleteException;
 
     @Operation(summary = "Получение списка студентов группы")
     @ApiResponses(value = {

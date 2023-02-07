@@ -3,6 +3,7 @@ package com.registationSystem.regSys.rest.impl;
 import com.registationSystem.regSys.dto.rq.RqGroupDTO;
 import com.registationSystem.regSys.dto.rs.RsGroupDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
+import com.registationSystem.regSys.exception.DeleteException;
 import com.registationSystem.regSys.exception.FindException;
 import com.registationSystem.regSys.exception.UpdateException;
 import com.registationSystem.regSys.mapper.Mapper;
@@ -67,12 +68,12 @@ public class GroupController implements GroupApi {
     }
 
     @Override
-    public ResponseEntity<?> delete(@PathVariable(name = "id") int id) throws FindException {
+    public ResponseEntity<?> delete(@PathVariable(name = "id") int id) throws DeleteException {
         try {
             groupService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException ex) {
-            throw new FindException("ID не существует");
+            throw new DeleteException("ID не существует");
         }
     }
 
