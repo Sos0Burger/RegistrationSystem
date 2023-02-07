@@ -10,9 +10,9 @@ import java.util.List;
 public interface StudentService {
     void create(RqStudentDTO rqStudentDTO);
 
-    List<RsStudentDTO> readAll();
+    List<RsStudentDTO> findAll();
 
-    StudentDAO read(int id);
+    StudentDAO find(int id);
 
     void update(RqStudentDTO rqStudentDTO, int id);
 

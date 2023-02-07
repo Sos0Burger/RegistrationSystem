@@ -23,7 +23,7 @@ public interface CoachApi {
     @Operation(summary = "Получение данных всех тренеров")
     @ApiResponse(responseCode = "201", description = "Данные успешно получены")
     @GetMapping()
-    ResponseEntity<List<RsCoachDTO>> readAll();
+    ResponseEntity<List<RsCoachDTO>> findAll();
 
     @Operation(summary = "Получение незакончченных занятий")
     @ApiResponse(responseCode = "201", description = "Данные успешно получены")

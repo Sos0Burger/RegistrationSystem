@@ -31,13 +31,13 @@ public interface StudentApi {
             @ApiResponse(responseCode = "404", description = "Группа не найдена"),
             @ApiResponse(responseCode = "404", description = "Студент не найден")
     })
-    @PutMapping
+    @PutMapping("{id}")
     ResponseEntity<?> update(@Validated @RequestBody RqStudentDTO rqStudentDTO, @PathVariable(name = "id") int id) throws UpdateException;
 
     @Operation(summary = "Получение данных всех студентов")
     @ApiResponse(responseCode = "200", description = "Данные успешно получены")
     @GetMapping
-    ResponseEntity<List<RsStudentDTO>> readAll();
+    ResponseEntity<List<RsStudentDTO>> findAll();
 
     @Operation(summary = "Получение расписания по ID студента")
     @ApiResponses(value = {
@@ -53,6 +53,6 @@ public interface StudentApi {
             @ApiResponse(responseCode = "404", description = "Студент не найден")
     })
     @GetMapping("/{id}")
-    ResponseEntity<RsStudentDTO> findById(@PathVariable(name = "id") int id) throws FindException;
+    ResponseEntity<RsStudentDTO> find(@PathVariable(name = "id") int id) throws FindException;
 
 }

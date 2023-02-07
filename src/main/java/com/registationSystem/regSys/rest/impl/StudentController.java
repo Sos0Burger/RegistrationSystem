@@ -8,8 +8,8 @@ import com.registationSystem.regSys.exception.FindException;
 import com.registationSystem.regSys.exception.UpdateException;
 import com.registationSystem.regSys.mapper.Mapper;
 import com.registationSystem.regSys.rest.StudentApi;
+import com.registationSystem.regSys.service.GroupService;
 import com.registationSystem.regSys.service.StudentService;
-import com.registationSystem.regSys.service.impl.GroupServiceImpl;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,10 +24,10 @@ import java.util.NoSuchElementException;
 @Getter
 public class StudentController implements StudentApi {
     private final StudentService studentService;
-    private final GroupServiceImpl groupService;
+    private final GroupService groupService;
 
     @Autowired
-    public StudentController(StudentService studentService, GroupServiceImpl groupService) {
+    public StudentController(StudentService studentService, GroupService groupService) {
         this.studentService = studentService;
         this.groupService = groupService;
     }
@@ -54,14 +54,14 @@ public class StudentController implements StudentApi {
     }
 
     @Override
-    public ResponseEntity<List<RsStudentDTO>> readAll() {
-        return new ResponseEntity<>(studentService.readAll(), HttpStatus.OK);
+    public ResponseEntity<List<RsStudentDTO>> findAll() {
+        return new ResponseEntity<>(studentService.findAll(), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<RsStudentDTO> findById(@PathVariable(name = "id") int id) throws FindException {
+    public ResponseEntity<RsStudentDTO> find(@PathVariable(name = "id") int id) throws FindException {
         try {
-            return new ResponseEntity<>(Mapper.studentDAOToStudentDTO(studentService.read(id)), HttpStatus.OK);
+            return new ResponseEntity<>(Mapper.studentDAOToStudentDTO(studentService.find(id)), HttpStatus.OK);
         } catch (NoSuchElementException ex) {
             throw new FindException("ID не существует");
         }

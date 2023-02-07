@@ -28,7 +28,7 @@ public class GroupServiceImpl implements GroupService {
         groupsRepository.save(Mapper.groupDTOToGroupDAO(rqGroupDTO));
     }
 
-    public List<RsGroupDTO> readAll() {
+    public List<RsGroupDTO> findAll() {
         List<RsGroupDTO> rsGroupDTOS = new ArrayList<>();
         for (GroupDAO groupDAO : groupsRepository.findAll()
         ) {
@@ -37,15 +37,15 @@ public class GroupServiceImpl implements GroupService {
         return rsGroupDTOS;
     }
 
-    public GroupDAO read(int id) {
-        return groupsRepository.findById(id).get();
+    public RsGroupDTO find(int id) {
+        return Mapper.groupDAOToGroupDTO(groupsRepository.findById(id).get());
     }
 
     public ResponseEntity<?> update(RqGroupDTO rqGroupDTO, int id) {
         GroupDAO groupDAO = groupsRepository.findById(id).get();
 
         if (groupDAO.getStudentsList().size() < rqGroupDTO.getSize()) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
             groupDAO.setSize(rqGroupDTO.getSize());
         }
@@ -64,7 +64,7 @@ public class GroupServiceImpl implements GroupService {
                 }
             }
             if (!(minAge >= rqGroupDTO.getMinAge() && maxAge <= rqGroupDTO.getMaxAge()))
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         groupDAO.setMinAge(rqGroupDTO.getMinAge());

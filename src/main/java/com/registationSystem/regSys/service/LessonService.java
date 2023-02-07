@@ -11,9 +11,9 @@ public interface LessonService {
     ResponseEntity<?> create(RqLessonDTO rqLessonDTO);
 
 
-    List<LessonDAO> readAll();
+    List<LessonDAO> findAll();
 
-    LessonDAO read(int id);
+    LessonDAO find(int id);
 
     void update(LessonDAO lessonDAO, int id);
 

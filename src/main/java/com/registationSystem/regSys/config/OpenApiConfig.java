@@ -13,7 +13,6 @@ public class OpenApiConfig {
 
     @Bean
     public OpenAPI customConfiguration() {
-        PathItem pathItem = new PathItem();
         return new OpenAPI()
                 .components(new Components())
                 .info(new Info().title("API Docs")

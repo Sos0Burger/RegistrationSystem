@@ -24,7 +24,7 @@ public class CoachServiceImpl implements CoachService {
         coachesRepository.save(Mapper.coachDTOToCoachDAO(rqCoachDTO));
     }
 
-    public List<RsCoachDTO> readAll() {
+    public List<RsCoachDTO> findAll() {
         List<RsCoachDTO> rsCoachDTOS = new ArrayList<>();
         for (CoachDAO coachDAO : coachesRepository.findAll()
         ) {
@@ -33,10 +33,8 @@ public class CoachServiceImpl implements CoachService {
         return rsCoachDTOS;
     }
 
-    public CoachDAO read(int id) {
-        return coachesRepository.existsById(id) ?
-                coachesRepository.findById(id).get() :
-                null;
+    public RsCoachDTO find(int id) {
+        return Mapper.coachDAOToCoachDTO(coachesRepository.findById(id).get());
     }
 
     public void update(RqCoachDTO rqCoachDTO, int id) {

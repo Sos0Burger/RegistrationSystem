@@ -31,7 +31,7 @@ public class StudentServiceImpl implements StudentService {
         studentsRepository.save(Mapper.studentDTOToStudentDAO(rqStudentDTO));
     }
 
-    public List<RsStudentDTO> readAll() {
+    public List<RsStudentDTO> findAll() {
         List<RsStudentDTO> rsStudentDTOs = new ArrayList<>();
         for (StudentDAO studentDAO : studentsRepository.findAll()
         ) {
@@ -40,13 +40,13 @@ public class StudentServiceImpl implements StudentService {
         return rsStudentDTOs;
     }
 
-    public StudentDAO read(int id) {
+    public StudentDAO find(int id) {
         return studentsRepository.findById(id).get();
     }
 
     public void update(RqStudentDTO rqStudentDTO, int id) {
         StudentDAO studentDAO;
-        studentDAO = read(id);
+        studentDAO = find(id);
         studentDAO.setGroupDAO(groupsRepository.findById(id).get());
         studentDAO.setAge(rqStudentDTO.getAge());
         studentDAO.setName(rqStudentDTO.getFirstName());

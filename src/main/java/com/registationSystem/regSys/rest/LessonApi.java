@@ -18,7 +18,7 @@ public interface LessonApi {
             @ApiResponse(responseCode = "201", description = "Успешно создано"),
             @ApiResponse(responseCode = "404", description = "Группа не найдена"),
             @ApiResponse(responseCode = "404", description = "Тренер не найден"),
-            @ApiResponse(responseCode = "409", description = "Время не подходит")
+            @ApiResponse(responseCode = "400", description = "Время не подходит")
     })
     @PostMapping
     ResponseEntity<?> create(@Validated @RequestBody RqLessonDTO rqLessonDTO) throws CreationException;

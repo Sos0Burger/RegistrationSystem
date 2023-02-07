@@ -53,14 +53,14 @@ public class LessonServiceImpl implements LessonService {
             }
         }
         //Это надо поменять, наверное
-        return new ResponseEntity<>(HttpStatus.CONFLICT);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    public List<LessonDAO> readAll() {
+    public List<LessonDAO> findAll() {
         return lessonsRepository.findAll();
     }
 
-    public LessonDAO read(int id) {
+    public LessonDAO find(int id) {
         return lessonsRepository.existsById(id) ?
                 lessonsRepository.findById(id).get() :
                 null;

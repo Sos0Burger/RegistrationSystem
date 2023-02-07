@@ -4,9 +4,9 @@ package com.registationSystem.regSys.rest.impl;
 import com.registationSystem.regSys.dto.rq.RqLessonDTO;
 import com.registationSystem.regSys.exception.CreationException;
 import com.registationSystem.regSys.rest.LessonApi;
-import com.registationSystem.regSys.service.impl.CoachServiceImpl;
-import com.registationSystem.regSys.service.impl.GroupServiceImpl;
-import com.registationSystem.regSys.service.impl.LessonServiceImpl;
+import com.registationSystem.regSys.service.CoachService;
+import com.registationSystem.regSys.service.GroupService;
+import com.registationSystem.regSys.service.LessonService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +19,12 @@ import java.util.NoSuchElementException;
 @Getter
 public class LessonController implements LessonApi {
 
-    private final LessonServiceImpl lessonService;
-    private final GroupServiceImpl groupService;
-    private final CoachServiceImpl coachService;
+    private final LessonService lessonService;
+    private final GroupService groupService;
+    private final CoachService coachService;
 
     @Autowired
-    LessonController(LessonServiceImpl lessonService, GroupServiceImpl groupService, CoachServiceImpl coachService) {
+    LessonController(LessonService lessonService, GroupService groupService, CoachService coachService) {
         this.lessonService = lessonService;
         this.groupService = groupService;
         this.coachService = coachService;

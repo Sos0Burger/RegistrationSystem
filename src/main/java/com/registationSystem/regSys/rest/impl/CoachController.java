@@ -5,7 +5,7 @@ import com.registationSystem.regSys.dto.rs.RsCoachDTO;
 import com.registationSystem.regSys.dto.rs.RsLessonDTO;
 import com.registationSystem.regSys.exception.FindException;
 import com.registationSystem.regSys.rest.CoachApi;
-import com.registationSystem.regSys.service.impl.CoachServiceImpl;
+import com.registationSystem.regSys.service.CoachService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +20,10 @@ import java.util.NoSuchElementException;
 @RestController
 @Getter
 public class CoachController implements CoachApi {
-    private final CoachServiceImpl coachService;
+    private final CoachService coachService;
 
     @Autowired
-    public CoachController(CoachServiceImpl coachService) {
+    public CoachController(CoachService coachService) {
         this.coachService = coachService;
     }
 
@@ -34,8 +34,8 @@ public class CoachController implements CoachApi {
     }
 
     @Override
-    public ResponseEntity<List<RsCoachDTO>> readAll() {
-        return new ResponseEntity<>(coachService.readAll(), HttpStatus.OK);
+    public ResponseEntity<List<RsCoachDTO>> findAll() {
+        return new ResponseEntity<>(coachService.findAll(), HttpStatus.OK);
     }
 
     @Override

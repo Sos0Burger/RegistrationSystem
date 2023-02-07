@@ -4,29 +4,29 @@ package com.registationSystem.regSys.mapper;
 import com.registationSystem.regSys.dao.*;
 import com.registationSystem.regSys.dto.rq.*;
 import com.registationSystem.regSys.dto.rs.*;
-import com.registationSystem.regSys.service.*;
+import com.registationSystem.regSys.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Mapper {
-    static GroupService groupService;
-    static CoachService coachService;
-    static StudentService studentService;
-    static LessonService lessonService;
-    static StudentAttendanceService studentAttendanceService;
+    static GroupsRepository groupsRepository;
+    static CoachesRepository coachesRepository;
+    static StudentsRepository studentsRepository;
+    static LessonsRepository lessonsRepository;
+    static StudentAttendanceRepository studentAttendanceRepository;
 
     @Autowired
-    Mapper(GroupService groupService,
-           CoachService coachService,
-           StudentService studentService,
-           LessonService lessonService,
-           StudentAttendanceService studentAttendanceService) {
-        Mapper.groupService = groupService;
-        Mapper.coachService = coachService;
-        Mapper.studentService = studentService;
-        Mapper.lessonService = lessonService;
-        Mapper.studentAttendanceService = studentAttendanceService;
+    Mapper(GroupsRepository groupsRepository,
+           CoachesRepository coachesRepository,
+           StudentsRepository studentsRepository,
+           LessonsRepository lessonsRepository,
+           StudentAttendanceRepository studentAttendanceRepository) {
+        Mapper.groupsRepository = groupsRepository;
+        Mapper.coachesRepository = coachesRepository;
+        Mapper.studentsRepository = studentsRepository;
+        Mapper.lessonsRepository = lessonsRepository;
+        Mapper.studentAttendanceRepository = studentAttendanceRepository;
     }
 
     public static StudentDAO studentDTOToStudentDAO(RqStudentDTO rqStudentDTO) {
@@ -37,7 +37,7 @@ public class Mapper {
                 rqStudentDTO.getAge(),
                 rqStudentDTO.getGroupId() == null ?
                         null :
-                        groupService.read(rqStudentDTO.getGroupId()),
+                        groupsRepository.findById(rqStudentDTO.getGroupId()).get(),
                 null
         );
     }
@@ -75,8 +75,8 @@ public class Mapper {
                 rqLessonDTO.getTime(),
                 rqLessonDTO.getDate(),
                 false,
-                groupService.read(rqLessonDTO.getGroupId()),
-                coachService.read(rqLessonDTO.getCoachId()),
+                groupsRepository.findById(rqLessonDTO.getGroupId()).get(),
+                coachesRepository.findById(rqLessonDTO.getCoachId()).get(),
                 null
         );
     }
@@ -115,8 +115,8 @@ public class Mapper {
 
     public static StudentAttendanceDAO studentAttendanceDTOToStudentAttendanceDAO(RqStudentAttendanceDTO rqStudentAttendanceDTO) {
         return new StudentAttendanceDAO(rqStudentAttendanceDTO.getId(),
-                studentService.read(rqStudentAttendanceDTO.getStudentId()),
-                lessonService.read(rqStudentAttendanceDTO.getLessonId()),
+                studentsRepository.findById(rqStudentAttendanceDTO.getStudentId()).get(),
+                lessonsRepository.findById(rqStudentAttendanceDTO.getLessonId()).get(),
                 rqStudentAttendanceDTO.getAttend(),
                 rqStudentAttendanceDTO.getWarn()
         );

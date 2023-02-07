@@ -4,7 +4,7 @@ import com.registationSystem.regSys.dto.rq.RqStudentAttendanceDTO;
 import com.registationSystem.regSys.exception.CreationException;
 import com.registationSystem.regSys.exception.UpdateException;
 import com.registationSystem.regSys.rest.StudentAttendanceApi;
-import com.registationSystem.regSys.service.impl.StudentAttendanceServiceImpl;
+import com.registationSystem.regSys.service.StudentAttendanceService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +17,10 @@ import java.util.NoSuchElementException;
 @Getter
 public class StudentAttendanceController implements StudentAttendanceApi {
 
-    private final StudentAttendanceServiceImpl studentAttendanceService;
+    private final StudentAttendanceService studentAttendanceService;
 
     @Autowired
-    public StudentAttendanceController(StudentAttendanceServiceImpl studentAttendanceService) {
+    public StudentAttendanceController(StudentAttendanceService studentAttendanceService) {
         this.studentAttendanceService = studentAttendanceService;
     }
 

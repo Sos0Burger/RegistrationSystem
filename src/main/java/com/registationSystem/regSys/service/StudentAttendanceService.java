@@ -6,7 +6,7 @@ import com.registationSystem.regSys.dto.rq.RqStudentAttendanceDTO;
 public interface StudentAttendanceService {
     void create(RqStudentAttendanceDTO rqStudentAttendanceDTO);
 
-    StudentAttendanceDAO read(int id);
+    StudentAttendanceDAO find(int id);
 
     void update(RqStudentAttendanceDTO rqStudentAttendanceDTO, int id);
 }

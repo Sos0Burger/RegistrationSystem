@@ -10,10 +10,9 @@ import java.util.List;
 public interface CoachService {
     void create(RqCoachDTO rqCoachDTO);
 
-    List<RsCoachDTO> readAll();
+    List<RsCoachDTO> findAll();
 
-    //TODO поменять логику Read из-за маппера
-    CoachDAO read(int id);
+    RsCoachDTO find(int id);
 
     void update(RqCoachDTO rqCoachDTO, int id);
 

@@ -34,7 +34,7 @@ public class StudentAttendanceServiceImpl implements StudentAttendanceService {
         }
     }
 
-    public StudentAttendanceDAO read(int id) {
+    public StudentAttendanceDAO find(int id) {
         return studentAttendanceRepository.findById(id).get();
     }
 

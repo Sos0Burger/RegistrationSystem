@@ -26,7 +26,7 @@ public interface GroupApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Успешно обновлён"),
             @ApiResponse(responseCode = "404", description = "Группа не найдена"),
-            @ApiResponse(responseCode = "409", description = "Размер группы не подходит")
+            @ApiResponse(responseCode = "400", description = "Размер группы не подходит")
     })
     @PutMapping("/{id}")
     ResponseEntity<?> update(@Validated @RequestBody RqGroupDTO rqGroupDTO, @PathVariable(name = "id") int id) throws UpdateException;
@@ -34,7 +34,7 @@ public interface GroupApi {
     @Operation(summary = "Получение данных всех групп")
     @ApiResponse(responseCode = "200", description = "Данные успешно получены")
     @GetMapping()
-    ResponseEntity<List<RsGroupDTO>> readAll();
+    ResponseEntity<List<RsGroupDTO>> findAll();
 
     @Operation(summary = "Получение данных группы по ID")
     @ApiResponses(value = {
@@ -42,7 +42,7 @@ public interface GroupApi {
             @ApiResponse(responseCode = "404", description = "Группа не найдена")
     })
     @GetMapping("/{id}")
-    ResponseEntity<RsGroupDTO> findById(@PathVariable(name = "id") int id) throws FindException;
+    ResponseEntity<RsGroupDTO> find(@PathVariable(name = "id") int id) throws FindException;
 
     @Operation(summary = "Запись студента в группу")
     @ApiResponses(value = {
