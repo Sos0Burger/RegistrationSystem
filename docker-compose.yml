@@ -1,0 +1,13 @@
+version: "3.3"
+
+services:
+
+  radar-mms-postgres:
+    container_name: registration-system-postgres
+    image: postgres:14.4-alpine
+    environment:
+      POSTGRES_DB: GachiSchool
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 24680
+    ports:
+      - "5432:5432"
