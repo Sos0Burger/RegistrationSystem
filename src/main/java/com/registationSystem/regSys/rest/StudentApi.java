@@ -5,6 +5,7 @@ import com.registationSystem.regSys.dto.rs.RsLessonDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
 import com.registationSystem.regSys.exception.CreationException;
 import com.registationSystem.regSys.exception.FindException;
+import com.registationSystem.regSys.exception.RegistrationException;
 import com.registationSystem.regSys.exception.UpdateException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -20,16 +21,17 @@ public interface StudentApi {
     @Operation(summary = "Создание студента")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Успешно создан"),
-            @ApiResponse(responseCode = "404", description = "Группа не найдена")
+            @ApiResponse(responseCode = "404", description = "Группа не найдена"),
+            @ApiResponse(responseCode = "400", description = "Данные не прошли валидацию")
     })
     @PostMapping
-    ResponseEntity<?> create(@Validated @RequestBody RqStudentDTO rqStudentDTO) throws CreationException;
+    ResponseEntity<?> create(@Validated @RequestBody RqStudentDTO rqStudentDTO) throws CreationException, RegistrationException;
 
     @Operation(summary = "Обновление данных студента")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Успешно обновлён"),
-            @ApiResponse(responseCode = "404", description = "Группа не найдена"),
-            @ApiResponse(responseCode = "404", description = "Студент не найден")
+            @ApiResponse(responseCode = "404", description = "Студент не найден"),
+            @ApiResponse(responseCode = "400", description = "Данные не прошли валидацию, группа не найдена")
     })
     @PutMapping("{id}")
     ResponseEntity<?> update(@Validated @RequestBody RqStudentDTO rqStudentDTO, @PathVariable(name = "id") int id) throws UpdateException;

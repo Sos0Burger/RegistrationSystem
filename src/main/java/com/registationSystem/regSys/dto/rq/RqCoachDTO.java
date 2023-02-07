@@ -21,7 +21,6 @@ public class RqCoachDTO {
     @Schema(description = "Фамилия тренера", example = "Даркхолм")
     private String surname;
     @NotNull
-    @NumberFormat
     @Schema(description = "Номер телефона тренера", example = "89447166451")
     private String phoneNumber;
     @Email

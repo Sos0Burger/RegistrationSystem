@@ -5,10 +5,10 @@ import com.registationSystem.regSys.dto.rs.RsLessonDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
 import com.registationSystem.regSys.exception.CreationException;
 import com.registationSystem.regSys.exception.FindException;
+import com.registationSystem.regSys.exception.RegistrationException;
 import com.registationSystem.regSys.exception.UpdateException;
 import com.registationSystem.regSys.mapper.Mapper;
 import com.registationSystem.regSys.rest.StudentApi;
-import com.registationSystem.regSys.service.GroupService;
 import com.registationSystem.regSys.service.StudentService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,20 +24,20 @@ import java.util.NoSuchElementException;
 @Getter
 public class StudentController implements StudentApi {
     private final StudentService studentService;
-    private final GroupService groupService;
 
     @Autowired
-    public StudentController(StudentService studentService, GroupService groupService) {
+    public StudentController(StudentService studentService) {
         this.studentService = studentService;
-        this.groupService = groupService;
     }
 
     @Override
-    public ResponseEntity<Void> create(RqStudentDTO rqStudentDTO) throws CreationException {
+    public ResponseEntity<Void> create(RqStudentDTO rqStudentDTO) throws CreationException, RegistrationException {
         try {
             studentService.create(rqStudentDTO);
         } catch (NoSuchElementException ex) {
             throw new CreationException("ID не существует");
+        } catch (RegistrationException ex){
+            throw new RegistrationException(ex.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

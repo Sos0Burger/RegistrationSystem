@@ -1,14 +1,17 @@
 package com.registationSystem.regSys.service.impl;
 
+import com.registationSystem.regSys.dao.GroupDAO;
 import com.registationSystem.regSys.dao.LessonDAO;
 import com.registationSystem.regSys.dao.StudentDAO;
 import com.registationSystem.regSys.dto.rq.RqStudentDTO;
 import com.registationSystem.regSys.dto.rs.RsLessonDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
+import com.registationSystem.regSys.exception.RegistrationException;
 import com.registationSystem.regSys.mapper.Mapper;
 import com.registationSystem.regSys.repository.GroupsRepository;
 import com.registationSystem.regSys.repository.StudentsRepository;
 import com.registationSystem.regSys.service.StudentService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +27,15 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private GroupsRepository groupsRepository;
 
-    public void create(RqStudentDTO rqStudentDTO) throws NoSuchElementException {
+    public void create(RqStudentDTO rqStudentDTO) throws NoSuchElementException, RegistrationException {
         if (rqStudentDTO.getGroupId() != null) {
-            groupsRepository.findById(rqStudentDTO.getGroupId()).get();
+            GroupDAO groupDAO = groupsRepository.findById(rqStudentDTO.getGroupId()).get();
+            if (groupDAO.getStudentsList().size() + 1 > groupDAO.getSize()) {
+                if (rqStudentDTO.getAge() < groupDAO.getMinAge() || rqStudentDTO.getAge() > groupDAO.getMaxAge()) {
+                    throw new RegistrationException("Возраст не подходит под требования группы");
+                }
+                throw new RegistrationException("Группа полная");
+            }
         }
         studentsRepository.save(Mapper.studentDTOToStudentDAO(rqStudentDTO));
     }
@@ -45,9 +54,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public void update(RqStudentDTO rqStudentDTO, int id) {
-        StudentDAO studentDAO;
-        studentDAO = find(id);
-        studentDAO.setGroupDAO(groupsRepository.findById(id).get());
+        StudentDAO studentDAO = find(id);
+        studentDAO.setGroupDAO(rqStudentDTO.getGroupId()==null?null:groupsRepository.findById(id).get());
         studentDAO.setAge(rqStudentDTO.getAge());
         studentDAO.setName(rqStudentDTO.getFirstName());
         studentDAO.setSurname(rqStudentDTO.getSurname());
@@ -60,6 +68,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public List<RsLessonDTO> getScheduleById(int id) {
+        if(studentsRepository.findById(id).get().getGroupDAO()==null) return null;
         List<RsLessonDTO> rsLessonDTOS = new ArrayList<>();
         Set<LessonDAO> lessonDAOList = groupsRepository.findById(studentsRepository.findById(id).get().getGroupDAO().getId()).get().getLessonsList();
         lessonDAOList.removeIf(LessonDAO::getIsDone);

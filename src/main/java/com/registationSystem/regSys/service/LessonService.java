@@ -15,7 +15,7 @@ public interface LessonService {
 
     LessonDAO find(int id);
 
-    void update(LessonDAO lessonDAO, int id);
+    ResponseEntity<?> update(RqLessonDTO rqLessonDTO, int id);
 
     boolean delete(int id);
 

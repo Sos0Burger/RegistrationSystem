@@ -3,9 +3,8 @@ package com.registationSystem.regSys.rest.impl;
 
 import com.registationSystem.regSys.dto.rq.RqLessonDTO;
 import com.registationSystem.regSys.exception.CreationException;
+import com.registationSystem.regSys.exception.UpdateException;
 import com.registationSystem.regSys.rest.LessonApi;
-import com.registationSystem.regSys.service.CoachService;
-import com.registationSystem.regSys.service.GroupService;
 import com.registationSystem.regSys.service.LessonService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +19,11 @@ import java.util.NoSuchElementException;
 public class LessonController implements LessonApi {
 
     private final LessonService lessonService;
-    private final GroupService groupService;
-    private final CoachService coachService;
+
 
     @Autowired
-    LessonController(LessonService lessonService, GroupService groupService, CoachService coachService) {
+    LessonController(LessonService lessonService) {
         this.lessonService = lessonService;
-        this.groupService = groupService;
-        this.coachService = coachService;
     }
 
     @Override
@@ -39,4 +35,13 @@ public class LessonController implements LessonApi {
         }
     }
 
+    @Override
+    public ResponseEntity<?> update(RqLessonDTO rqLessonDTO, int lessonId) throws UpdateException {
+        try {
+            return lessonService.update(rqLessonDTO, lessonId);
+        }catch (NoSuchElementException ex){
+            throw new UpdateException("ID не найден");
+        }
+
+    }
 }

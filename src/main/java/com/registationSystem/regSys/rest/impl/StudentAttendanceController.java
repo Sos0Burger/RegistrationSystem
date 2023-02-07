@@ -1,6 +1,7 @@
 package com.registationSystem.regSys.rest.impl;
 
 import com.registationSystem.regSys.dto.rq.RqStudentAttendanceDTO;
+import com.registationSystem.regSys.dto.rs.RsStudentAttendanceDTO;
 import com.registationSystem.regSys.exception.CreationException;
 import com.registationSystem.regSys.exception.UpdateException;
 import com.registationSystem.regSys.rest.StudentAttendanceApi;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -31,7 +33,7 @@ public class StudentAttendanceController implements StudentAttendanceApi {
         } catch (NoSuchElementException ex) {
             throw new CreationException("ID не существует");
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @Override
@@ -42,5 +44,10 @@ public class StudentAttendanceController implements StudentAttendanceApi {
             throw new UpdateException("ID не существует");
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<List<RsStudentAttendanceDTO>> findAll() {
+        return new ResponseEntity<>(studentAttendanceService.findAll(), HttpStatus.OK);
     }
 }

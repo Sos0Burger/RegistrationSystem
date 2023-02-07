@@ -66,11 +66,35 @@ public class LessonServiceImpl implements LessonService {
                 null;
     }
 
-    public void update(LessonDAO lessonDAO, int id) {
-        if (lessonsRepository.existsById(id)) {
-            lessonDAO.setId(id);
-            lessonsRepository.save(lessonDAO);
+    public ResponseEntity<?> update(RqLessonDTO rqLessonDTO, int id) {
+        groupsRepository.findById(rqLessonDTO.getGroupId()).get();
+        coachesRepository.findById(rqLessonDTO.getCoachId()).get();
+
+        LessonDAO lessonDAO = Mapper.lessonDTOToLessonDAO(rqLessonDTO);
+        List<LessonDAO> dateLessonsList = lessonsRepository.findByDate(lessonDAO.getDate());
+        dateLessonsList.remove(lessonDAO);
+
+        ArrayList<Time> times = new ArrayList<>();
+        times.add(ApplicationSettings.LESSON_START_TIME);
+        times.add(ApplicationSettings.LESSON_END_TIME);
+
+        //Проверка возможности записи на это время
+        for (LessonDAO item : dateLessonsList
+        ) {
+            times.add(item.getTime());
         }
+        Collections.sort(times);
+        for (int i = 0; i < times.size() - 1; i++) {
+            if (toMinutes(times.get(i)) + 60 <= toMinutes(lessonDAO.getTime()) &
+                    toMinutes(times.get(i + 1)) - 60 >= toMinutes(lessonDAO.getTime())) {
+                lessonDAO.setId(lessonDAO.getId());
+                lessonDAO.setId(id);
+                lessonsRepository.save(lessonDAO);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }
+        }
+        //Это надо поменять, наверное
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     public boolean delete(int id) {

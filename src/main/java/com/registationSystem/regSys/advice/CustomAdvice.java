@@ -1,9 +1,6 @@
 package com.registationSystem.regSys.advice;
 
-import com.registationSystem.regSys.exception.CreationException;
-import com.registationSystem.regSys.exception.DeleteException;
-import com.registationSystem.regSys.exception.FindException;
-import com.registationSystem.regSys.exception.UpdateException;
+import com.registationSystem.regSys.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,5 +23,9 @@ public class CustomAdvice {
     @ExceptionHandler(DeleteException.class)
     public ResponseEntity<?> handleException(DeleteException e) {
         return new ResponseEntity<>("Ошибка удаления данных: " + e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(RegistrationException.class)
+    public ResponseEntity<?> handleException(RegistrationException e) {
+        return new ResponseEntity<>("Ошибка регистрации: " + e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

@@ -5,6 +5,7 @@ import com.registationSystem.regSys.dto.rs.RsGroupDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
 import com.registationSystem.regSys.exception.DeleteException;
 import com.registationSystem.regSys.exception.FindException;
+import com.registationSystem.regSys.exception.RegistrationException;
 import com.registationSystem.regSys.exception.UpdateException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,15 +19,18 @@ import java.util.List;
 @RequestMapping("/groups")
 public interface GroupApi {
     @Operation(summary = "Создание группы")
-    @ApiResponse(responseCode = "201", description = "Успешно создана")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Успешно создана"),
+            @ApiResponse(responseCode = "400", description = "Данные не прошли валидацию")
+    })
     @PostMapping()
     ResponseEntity<?> create(@Validated @RequestBody RqGroupDTO rqGroupDTO);
 
     @Operation(summary = "Обновление данных студента")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Успешно обновлён"),
-            @ApiResponse(responseCode = "404", description = "Группа не найдена"),
-            @ApiResponse(responseCode = "400", description = "Размер группы не подходит")
+            @ApiResponse(responseCode = "400", description = "Данные не прошли валидацию, размер группы не подходит, группа полная"),
+            @ApiResponse(responseCode = "404", description = "Группа не найдена")
     })
     @PutMapping("/{id}")
     ResponseEntity<?> update(@Validated @RequestBody RqGroupDTO rqGroupDTO, @PathVariable(name = "id") int id) throws UpdateException;
@@ -47,11 +51,10 @@ public interface GroupApi {
     @Operation(summary = "Запись студента в группу")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Данные успешно получены"),
-            @ApiResponse(responseCode = "404", description = "Студент не найден"),
-            @ApiResponse(responseCode = "404", description = "Группа не найдена")
+            @ApiResponse(responseCode = "404", description = "Студент не найден, группа не найдена")
     })
     @PostMapping("/{id}/{studentId}")
-    ResponseEntity<?> register(@PathVariable(name = "id") int groupId, @PathVariable(name = "studentId") int studentId) throws FindException;
+    ResponseEntity<?> register(@PathVariable(name = "id") int groupId, @PathVariable(name = "studentId") int studentId) throws FindException, RegistrationException;
 
     @Operation(summary = "Удаление всех студентов из группы по ID группы")
     @ApiResponses(value = {

@@ -5,6 +5,7 @@ import com.registationSystem.regSys.dao.StudentDAO;
 import com.registationSystem.regSys.dto.rq.RqGroupDTO;
 import com.registationSystem.regSys.dto.rs.RsGroupDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
+import com.registationSystem.regSys.exception.RegistrationException;
 import com.registationSystem.regSys.mapper.Mapper;
 import com.registationSystem.regSys.repository.GroupsRepository;
 import com.registationSystem.regSys.repository.StudentsRepository;
@@ -20,9 +21,9 @@ import java.util.List;
 @Service
 public class GroupServiceImpl implements GroupService {
     @Autowired
-    private GroupsRepository groupsRepository;
-    @Autowired
     StudentsRepository studentsRepository;
+    @Autowired
+    private GroupsRepository groupsRepository;
 
     public void create(RqGroupDTO rqGroupDTO) {
         groupsRepository.save(Mapper.groupDTOToGroupDAO(rqGroupDTO));
@@ -73,16 +74,16 @@ public class GroupServiceImpl implements GroupService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public ResponseEntity<?> registration(int groupId, int studentId) {
+    public ResponseEntity<?> registration(int groupId, int studentId) throws RegistrationException {
 
         GroupDAO groupDAO = groupsRepository.findById(groupId).get();
         StudentDAO studentDAO = studentsRepository.findById(studentId).get();
 
-        if (!(groupDAO.getStudentsList().size() + 1 <= groupDAO.getSize())) {
-            if (!(studentDAO.getAge() >= groupDAO.getMinAge() && studentDAO.getAge() <= groupDAO.getMaxAge())) {
-                return new ResponseEntity<>("Age is not suitable", HttpStatus.NOT_ACCEPTABLE);
+        if (groupDAO.getStudentsList().size() + 1 <= groupDAO.getSize()) {
+            if (studentDAO.getAge() < groupDAO.getMinAge() || studentDAO.getAge() > groupDAO.getMaxAge()) {
+                throw new RegistrationException("Возраст не подходит под требования группы");
             }
-            return new ResponseEntity<>("Group is full", HttpStatus.NOT_ACCEPTABLE);
+            throw new RegistrationException("Группа полная");
         }
         studentDAO.setGroupDAO(groupDAO);
         studentsRepository.save(studentDAO);

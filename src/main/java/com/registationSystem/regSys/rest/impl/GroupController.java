@@ -5,6 +5,7 @@ import com.registationSystem.regSys.dto.rs.RsGroupDTO;
 import com.registationSystem.regSys.dto.rs.RsStudentDTO;
 import com.registationSystem.regSys.exception.DeleteException;
 import com.registationSystem.regSys.exception.FindException;
+import com.registationSystem.regSys.exception.RegistrationException;
 import com.registationSystem.regSys.exception.UpdateException;
 import com.registationSystem.regSys.rest.GroupApi;
 import com.registationSystem.regSys.service.GroupService;
@@ -57,11 +58,13 @@ public class GroupController implements GroupApi {
     }
 
     @Override
-    public ResponseEntity<?> register(@PathVariable(name = "id") int groupId, @PathVariable(name = "studentId") int studentId) throws FindException {
+    public ResponseEntity<?> register(@PathVariable(name = "id") int groupId, @PathVariable(name = "studentId") int studentId) throws FindException, RegistrationException {
         try {
             return groupService.registration(groupId, studentId);
         } catch (NoSuchElementException ex) {
             throw new FindException("ID не существует");
+        } catch (RegistrationException ex){
+            throw new RegistrationException(ex.getMessage());
         }
     }
 

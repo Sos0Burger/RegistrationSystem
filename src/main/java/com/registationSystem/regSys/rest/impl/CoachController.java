@@ -4,6 +4,7 @@ import com.registationSystem.regSys.dto.rq.RqCoachDTO;
 import com.registationSystem.regSys.dto.rs.RsCoachDTO;
 import com.registationSystem.regSys.dto.rs.RsLessonDTO;
 import com.registationSystem.regSys.exception.FindException;
+import com.registationSystem.regSys.exception.UpdateException;
 import com.registationSystem.regSys.rest.CoachApi;
 import com.registationSystem.regSys.service.CoachService;
 import lombok.Getter;
@@ -31,6 +32,17 @@ public class CoachController implements CoachApi {
     public ResponseEntity<?> create(@RequestBody RqCoachDTO rqCoachDTO) {
         coachService.create(rqCoachDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<?> update(RqCoachDTO rqCoachDTO, int coachId) throws UpdateException {
+        try {
+            coachService.update(rqCoachDTO, coachId);
+        }
+        catch (NoSuchElementException ex){
+            throw new UpdateException("ID не существует");
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
