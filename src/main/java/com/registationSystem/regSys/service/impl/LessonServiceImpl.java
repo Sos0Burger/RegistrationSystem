@@ -81,7 +81,7 @@ public class LessonServiceImpl implements LessonService {
         //Проверка возможности записи на это время
         for (LessonDAO item : dateLessonsList
         ) {
-            if(!(item.getTime().equals(lessonDAO.getTime()))) {
+            if (!(item.getTime().equals(lessonDAO.getTime()))) {
                 times.add(item.getTime());
             }
         }
